@@ -1,0 +1,4 @@
+interface:
+  display_name: "行业驱动力分析"
+  short_description: "归并并核查行业变化的核心驱动机制"
+  default_prompt: "Use $hehe-industry-drivers to identify and test the drivers of a clearly defined industry outcome."

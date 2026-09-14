@@ -1,0 +1,4 @@
+interface:
+  display_name: "行业痛点分析"
+  short_description: "辨析多角色持续承担的现实损失、替代缺陷与未解决机制"
+  default_prompt: "Use $hehe-industry-pain-points to distinguish real industry pain points from complaints, needs, risks, and vendor claims."

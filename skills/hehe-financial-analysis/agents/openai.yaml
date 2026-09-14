@@ -1,0 +1,4 @@
+interface:
+  display_name: "财务分析"
+  short_description: "深度分析三表；无完整财报时按资料条件分流"
+  default_prompt: "Use $hehe-financial-analysis for a full multi-period financial analysis following the flat report outline, with a linked formula workbook when statements are sufficient. If complete statements are unavailable, continue with a clearly labeled limited-disclosure analysis, operating-finance scenario model, or financial analyzability and data-request assessment without inventing statements."

@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "profile": "hehe-industry-researcher-public-full",
+  "entry_skill": "hehe-industry-researcher",
+  "install_policy": "full-bundle",
+  "install_policy_notes": "作为完整行业或企业研究总路由发布时，entry_skill 与 13 个 required_atomic_skills 必须一同安装；任一原子专项仍可脱离总路由单独安装和使用。部分安装只能交付已具备专项或有限范围研究，不得称为完整行业或企业研究。研究辅助能力均为可选增强，不是启动条件。",
+  "required_atomic_skills": [
+    {
+      "name": "hehe-market-sizing",
+      "suite_path": "skills/hehe-market-sizing"
+    },
+    {
+      "name": "hehe-industry-chain-map",
+      "suite_path": "skills/hehe-industry-chain-map"
+    },
+    {
+      "name": "hehe-business-model",
+      "suite_path": "skills/hehe-business-model"
+    },
+    {
+      "name": "hehe-competitive-landscape",
+      "suite_path": "skills/hehe-competitive-landscape"
+    },
+    {
+      "name": "hehe-trend-analysis",
+      "suite_path": "skills/hehe-trend-analysis"
+    },
+    {
+      "name": "hehe-pest-analysis",
+      "suite_path": "skills/hehe-pest-analysis"
+    },
+    {
+      "name": "hehe-company-profile",
+      "suite_path": "skills/hehe-company-profile"
+    },
+    {
+      "name": "hehe-industry-drivers",
+      "suite_path": "skills/hehe-industry-drivers"
+    },
+    {
+      "name": "hehe-industry-pain-points",
+      "suite_path": "skills/hehe-industry-pain-points"
+    },
+    {
+      "name": "hehe-investment-logic",
+      "suite_path": "skills/hehe-investment-logic"
+    },
+    {
+      "name": "hehe-financial-analysis",
+      "suite_path": "skills/hehe-financial-analysis"
+    },
+    {
+      "name": "hehe-governance-capital-allocation",
+      "suite_path": "skills/hehe-governance-capital-allocation"
+    },
+    {
+      "name": "hehe-valuation-analysis",
+      "suite_path": "skills/hehe-valuation-analysis"
+    }
+  ],
+  "optional_capability_types": [
+    "网页搜索或浏览",
+    "公开信息采集",
+    "搜索或数据 MCP/API",
+    "PDF、Office、网页正文或 OCR 解析",
+    "材料审核、报告写作或交付质检",
+    "电子表格生成与公式重算"
+  ],
+  "shared_public_files": [],
+  "excluded_from_public_package": [
+    "_本地维护",
+    "90_历史备份",
+    "credentials",
+    "root-junctions",
+    "runtime-caches"
+  ]
+}

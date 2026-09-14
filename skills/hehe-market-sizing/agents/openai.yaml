@@ -1,0 +1,4 @@
+interface:
+  display_name: "市场规模测算"
+  short_description: "按机会、经营、采购、经费、增长和统计拆分等角度测算市场规模"
+  default_prompt: "使用 $hehe-market-sizing 测算 [目标市场] 的市场规模。"

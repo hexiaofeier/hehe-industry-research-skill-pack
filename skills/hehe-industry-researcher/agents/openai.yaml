@@ -1,0 +1,4 @@
+interface:
+  display_name: "行研分析师"
+  short_description: "统一安排公开信息搜索、资料审核、行业与企业分析和研究结果交付"
+  default_prompt: "使用 $hehe-industry-researcher 完成行业研究、企业研究、行业+企业研究或单独专项研究：先确认对象和范围，再按需搜索、审核、分析并交付结果。"

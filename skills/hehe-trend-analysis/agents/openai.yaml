@@ -1,0 +1,7 @@
+interface:
+  display_name: "行业趋势分析"
+  short_description: "判断变化阶段、核心变量、时间信号与证伪条件"
+  default_prompt: "使用 $hehe-trend-analysis，读取已有材料，按需补搜并完成必要审核，判断这个行业变化所处阶段、核心变量、经营后果和后续证伪信号。"
+
+policy:
+  allow_implicit_invocation: true

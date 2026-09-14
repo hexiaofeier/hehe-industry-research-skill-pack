@@ -1,0 +1,4 @@
+interface:
+  display_name: "治理与资本配置"
+  short_description: "分析控制权、激励、关联交易及资本配置历史质量"
+  default_prompt: "使用 $hehe-governance-capital-allocation 分析目标公司的治理机制与资本配置质量，并区分事实、机制、结果和待补证项。"

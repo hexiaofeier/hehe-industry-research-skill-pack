@@ -1,0 +1,4 @@
+interface:
+  display_name: "估值分析"
+  short_description: "建立有口径、有区间和敏感性的可复算估值模型"
+  default_prompt: "使用 $hehe-valuation-analysis 选择适用估值方法，建立价值区间、调整桥、敏感性和关键翻转变量。"

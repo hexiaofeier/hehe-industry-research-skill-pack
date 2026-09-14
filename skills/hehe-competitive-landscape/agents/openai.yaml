@@ -1,0 +1,4 @@
+interface:
+  display_name: "竞争格局分析"
+  short_description: "分析行业竞争格局、企业与主要对手的相对位置，也可进行局部比较"
+  default_prompt: "使用 $hehe-competitive-landscape，分析这个行业的竞争格局或目标企业与主要对手；利用已有材料，必要时按本次搜索安排补充资料，交付专项 Markdown 报告。"

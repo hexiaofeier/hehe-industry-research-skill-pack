@@ -1,0 +1,30 @@
+{
+  "title": "产业链角色关系图 · 布局示意",
+  "subtitle": "仅供排版参考；按实际行业删改角色与关系，不代表企业间已经存在交易。",
+  "width": 1500,
+  "height": 1120,
+  "nodes": [
+    {"id":"software","kind":"normal","title":"① 软件与技术投入","lines":["软件、工具与技术能力"],"x":330,"y":115,"w":330,"h":110},
+    {"id":"supply","kind":"normal","title":"② 实体资源投入","lines":["原材料、设备与生产资源"],"x":890,"y":115,"w":330,"h":110},
+    {"id":"producer","kind":"core","title":"③ 核心生产与交付主体","lines":["组织生产、定价与履约","按实际行业替换为核心经营角色"],"x":540,"y":330,"w":430,"h":155},
+    {"id":"support","kind":"support","title":"④ 交易与责任配套","lines":["支付、法律、安全、保险"],"x":50,"y":340,"w":320,"h":135},
+    {"id":"policy","kind":"policy","title":"⑤ 政府与公共机构","lines":["采购、政策、公共服务"],"x":50,"y":625,"w":320,"h":150},
+    {"id":"community","kind":"support","title":"⑥ 园区与中介","lines":["资源对接、服务与支持"],"x":430,"y":665,"w":280,"h":120},
+    {"id":"platform","kind":"normal","title":"⑦ 交易与渠道平台","lines":["触达、展示与交易服务"],"x":780,"y":665,"w":290,"h":120},
+    {"id":"integrator","kind":"normal","title":"⑧ 集成与总包主体","lines":["需求拆解、集成与交付"],"x":1140,"y":665,"w":300,"h":120},
+    {"id":"demand","kind":"terminal","title":"⑨ 终端需求与付款方","lines":["使用者、采购者与最终客户"],"x":810,"y":935,"w":590,"h":110}
+  ],
+  "edges": [
+    {"source":"software","target":"producer","label":"软件与技术能力","type":"main","points":[[495,225],[495,280],[665,280],[665,330]],"label_x":580,"label_y":265},
+    {"source":"supply","target":"producer","label":"生产资源","type":"main","points":[[1055,225],[1055,280],[865,280],[865,330]],"label_x":965,"label_y":265},
+    {"source":"support","target":"producer","label":"配套服务","type":"support","points":[[370,405],[540,405]],"label_x":455,"label_y":390},
+    {"source":"policy","target":"producer","label":"采购与政策支持","type":"policy","points":[[215,625],[215,545],[590,545],[590,485]],"label_x":360,"label_y":530},
+    {"source":"policy","target":"community","label":"载体\n支持","type":"policy","points":[[370,730],[430,730]],"label_x":400,"label_y":687},
+    {"source":"community","target":"producer","label":"资源对接","type":"support","points":[[640,665],[640,585],[710,585],[710,485]],"label_x":735,"label_y":580},
+    {"source":"producer","target":"platform","label":"上架与渠道合作","type":"main","points":[[810,485],[810,565],[925,565],[925,665]],"label_x":955,"label_y":548},
+    {"source":"producer","target":"integrator","label":"分包或联合交付","type":"main","points":[[900,485],[900,520],[1290,520],[1290,665]],"label_x":1170,"label_y":505},
+    {"source":"producer","target":"demand","label":"直接交易与交付","type":"main","points":[[970,410],[1470,410],[1470,885],[1320,885],[1320,935]],"label_x":1225,"label_y":395},
+    {"source":"platform","target":"demand","label":"平台成交","type":"main","points":[[925,785],[925,860],[955,860],[955,935]],"label_x":1000,"label_y":845},
+    {"source":"integrator","target":"demand","label":"总包交付","type":"main","points":[[1290,785],[1290,850],[1170,850],[1170,935]],"label_x":1185,"label_y":835}
+  ]
+}
