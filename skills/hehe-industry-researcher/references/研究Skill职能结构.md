@@ -1,13 +1,13 @@
 # 研究Skill职能结构
 
-可统筹调研的能力分为两部分：**研究辅助能力**和 **研究分析类 Skill**。研究辅助能力按当前环境选用；完整行业或企业研究使用 `hehe-industry-researcher` 与 13 个原子专项组成的公开组合。
+可统筹调研的能力分为两部分：**研究辅助能力**和 **研究分析类 Skill**。研究辅助能力按当前环境选用；完整行业或企业研究使用 `hehe-industry-researcher` 与 13 个专项 Skill 组成的公开组合。
 
 1. **研究辅助能力**  
 负责搜索方向设计、公开信息采集、材料审核、报告整合和交付检查。使用宿主当前可用的搜索、浏览器、数据库、MCP/API、文件解析或已安装 Skill；没有专用 Skill 时，由 `hehe-industry-researcher` 按各流程中的后备规则自行完成。
 
 2. **研究分析类 Skill** 
 共 13 个专项 Skill，每个 Skill 负责一个核心分析任务，是行业研究技能包的核心能力。包含市场规模 `hehe-market-sizing`、产业链 `hehe-industry-chain-map`、商业模式 `hehe-business-model`、竞争格局 `hehe-competitive-landscape`、PEST 外部环境 `hehe-pest-analysis`、趋势分析 `hehe-trend-analysis`、驱动力分析 `hehe-industry-drivers`、行业痛点 `hehe-industry-pain-points`、公司画像 `hehe-company-profile`、公司财务分析 `hehe-financial-analysis`、治理与资本配置 `hehe-governance-capital-allocation`、估值分析 `hehe-valuation-analysis` 和投资逻辑 `hehe-investment-logic`，均由盒子原创。
-用户可以单独安装和调用任一专项 Skill，直接进行某个明确问题的分析，专项不依赖 `hehe-industry-researcher` 存在。`hehe-industry-researcher` 作为完整公开组合入口时应与 13 个专项一同安装；部分安装仍可完成已具备的单项或有限范围研究，但不得把缺少应调用模块的结果称为完整行业或企业研究。
+用户可以单独安装和直接调用任一专项 Skill，直接调用时由该专项独立完成，不因 `hehe-industry-researcher` 已安装而重新路由。用户明确调用 `hehe-industry-researcher` 统筹时，才由它派发任务卡。`hehe-industry-researcher` 作为完整公开组合入口时应与 13 个专项一同安装；部分安装仍可完成已具备的单项或有限范围研究，但不得把缺少应调用模块的结果称为完整行业或企业研究。
 
 
 ## 研究辅助能力说明
@@ -17,9 +17,9 @@
 - **材料审核：** 有专用审核能力时调用；没有时完成原文、主体、时间、地域、定义口径、单位分母、重复和冲突等最低检查。
 - **报告与交付检查：** 有对应写作或质检能力时调用；没有时由 `hehe-industry-researcher` 按最终交付流程自行整合和检查。
 
-研究辅助能力均为可选增强，不是 `hehe-industry-researcher` 或原子专项的启动许可证。
+研究辅助能力均为可选增强，不是 `hehe-industry-researcher` 或专项 Skill的启动许可证。
 
-## 研究分析类 skill 调用规则说明
+## 研究分析类 Skill 调用规则说明
 
 研究分析类 Skill 是 `hehe-industry-researcher` 组合的核心能力，包括市场规模、产业链、商业模式、竞争格局、PEST 外部环境、趋势、驱动力、痛点、公司画像、财务分析、治理与资本配置、估值分析和投资逻辑等。共覆盖 13 个专项 Skill，每个 Skill 负责一个专项能力。
 

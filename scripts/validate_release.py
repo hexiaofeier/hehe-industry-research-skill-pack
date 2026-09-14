@@ -111,15 +111,15 @@ def main() -> int:
         errors.append("missing router package-manifest.json")
     else:
         router_manifest = json.loads(read_text(router_manifest_path))
-        required = router_manifest.get("required_atomic_skills", [])
+        required = router_manifest.get("required_specialty_skills", [])
         required_names = [item.get("name") for item in required]
-        expected_atomic = [name for name in names if name != entry]
+        expected_specialty = [name for name in names if name != entry]
         if router_manifest.get("install_policy") != "full-bundle":
             errors.append("router install_policy must be full-bundle")
         if router_manifest.get("entry_skill") != entry:
             errors.append("router entry_skill does not use public name")
-        if sorted(required_names) != sorted(expected_atomic):
-            errors.append("router required_atomic_skills does not match the 13 public atomic skills")
+        if sorted(required_names) != sorted(expected_specialty):
+            errors.append("router required_specialty_skills does not match the 13 public specialty skills")
 
     for name in names:
         if name == entry:

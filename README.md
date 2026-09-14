@@ -1,6 +1,6 @@
 # 盒盒行业研究技能包
 
-**Hehe Industry Research Skill Pack** 是一组面向公开信息研究的中文 Skill。首批版本由 `hehe-industry-researcher` 统筹 13 个原子专项，覆盖完整行业研究、企业研究和单独专项研究。
+**Hehe Industry Research Skill Pack** 是一组面向公开信息研究的中文 Skill。首批版本由 `hehe-industry-researcher` 统筹 13 个专项 Skill，覆盖完整行业研究、企业研究和单独专项研究。
 
 所有本包分析 Skill 使用 `hehe-` 命名空间，便于识别来源。啥好用（`sha-hao-yong`）、探子（`tanzi`）和搜查令（`sou-cha-ling`）保留原名；它们不属于本仓库首批安装内容，也不是本包的运行前提。
 
@@ -9,25 +9,25 @@
 | 类型 | Skill | 核心任务 |
 |---|---|---|
 | 总路由 | `hehe-industry-researcher` | 研究开题、搜索与审核组织、专项路由、完整 Markdown 报告整合 |
-| 原子专项 | `hehe-market-sizing` | 市场规模、情景与敏感性 |
-| 原子专项 | `hehe-industry-chain-map` | 产业链、四流、瓶颈与结构图 |
-| 原子专项 | `hehe-business-model` | 商业模式与经营闭环 |
-| 原子专项 | `hehe-competitive-landscape` | 竞争格局、企业比较与标的位置 |
-| 原子专项 | `hehe-pest-analysis` | PEST 外部环境及影响传导 |
-| 原子专项 | `hehe-trend-analysis` | 趋势阶段、信号与证伪 |
-| 原子专项 | `hehe-industry-drivers` | 驱动机制、约束与持续性 |
-| 原子专项 | `hehe-industry-pain-points` | 角色损失、痛点机制与机会边界 |
-| 原子专项 | `hehe-company-profile` | 公司主体、业务与经营画像 |
-| 原子专项 | `hehe-financial-analysis` | 完整或有限披露财务分析 |
-| 原子专项 | `hehe-governance-capital-allocation` | 治理机制与资本配置质量 |
-| 原子专项 | `hehe-valuation-analysis` | 上市、非上市及商业尽调估值 |
-| 原子专项 | `hehe-investment-logic` | 条件化投资逻辑、风险与退出条件 |
+| 专项 Skill | `hehe-market-sizing` | 市场规模、情景与敏感性 |
+| 专项 Skill | `hehe-industry-chain-map` | 产业链、四流、瓶颈与结构图 |
+| 专项 Skill | `hehe-business-model` | 商业模式与经营闭环 |
+| 专项 Skill | `hehe-competitive-landscape` | 竞争格局、企业比较与标的位置 |
+| 专项 Skill | `hehe-pest-analysis` | PEST 外部环境及影响传导 |
+| 专项 Skill | `hehe-trend-analysis` | 趋势阶段、信号与证伪 |
+| 专项 Skill | `hehe-industry-drivers` | 驱动机制、约束与持续性 |
+| 专项 Skill | `hehe-industry-pain-points` | 角色损失、痛点机制与机会边界 |
+| 专项 Skill | `hehe-company-profile` | 公司主体、业务与经营画像 |
+| 专项 Skill | `hehe-financial-analysis` | 完整或有限披露财务分析 |
+| 专项 Skill | `hehe-governance-capital-allocation` | 治理机制与资本配置质量 |
+| 专项 Skill | `hehe-valuation-analysis` | 上市、非上市及商业尽调估值 |
+| 专项 Skill | `hehe-investment-logic` | 条件化投资逻辑、风险与退出条件 |
 
 ## 安装与使用
 
-完整行业或企业研究请同时安装 `skills/` 下全部 14 个 Skill。总路由的完整包校验要求 13 个原子专项全部存在；运行时再按研究问题选择适用模块，不机械生成无关章节。
+完整行业或企业研究请同时安装 `skills/` 下全部 14 个 Skill，并由 `hehe-industry-researcher` 统筹；运行时按研究问题选择适用专项，不机械生成无关章节。
 
-任一原子专项也可以单独安装和调用。部分安装只能交付已安装专项或明确标注的有限范围研究，不能称为完整行业或企业研究。
+用户直接调用任一专项 Skill 时，由该专项独立执行，不因总入口已安装而重新路由。部分安装只能交付已安装专项或明确标注的有限范围研究，不能称为完整行业或企业研究。
 
 把需要的 Skill 目录复制到所用 Agent 的 Skills 目录即可。不同宿主的 Skills 目录和加载方式不同，请遵循该宿主的安装说明；本仓库不要求固定的本地路径、私有插件或付费服务。
 

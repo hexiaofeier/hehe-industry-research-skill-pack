@@ -3,8 +3,8 @@
   "profile": "hehe-industry-researcher-public-full",
   "entry_skill": "hehe-industry-researcher",
   "install_policy": "full-bundle",
-  "install_policy_notes": "作为完整行业或企业研究总路由发布时，entry_skill 与 13 个 required_atomic_skills 必须一同安装；任一原子专项仍可脱离总路由单独安装和使用。部分安装只能交付已具备专项或有限范围研究，不得称为完整行业或企业研究。研究辅助能力均为可选增强，不是启动条件。",
-  "required_atomic_skills": [
+  "install_policy_notes": "作为完整行业或企业研究总入口发布时，entry_skill 与 13 个 required_specialty_skills 必须一同安装；任一专项 Skill 都可由用户直接调用，不因总入口已安装而重新路由。部分安装只能交付已具备专项或有限范围研究，不得称为完整行业或企业研究。研究辅助能力均为可选增强，不是启动条件。",
+  "required_specialty_skills": [
     {
       "name": "hehe-market-sizing",
       "suite_path": "skills/hehe-market-sizing"

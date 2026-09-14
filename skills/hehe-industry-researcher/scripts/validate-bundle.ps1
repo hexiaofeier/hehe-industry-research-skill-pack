@@ -12,7 +12,7 @@ function Find-SuiteRoot {
     param([string]$StartPath)
 
     $cursor = [System.IO.DirectoryInfo]::new((Resolve-Path -LiteralPath $StartPath).Path)
-    $probeRelative = ([string]$manifest.required_atomic_skills[0].suite_path).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $probeRelative = ([string]$manifest.required_specialty_skills[0].suite_path).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
     while ($null -ne $cursor) {
         if ((Test-Path -LiteralPath (Join-Path $cursor.FullName 'CODEX.md')) -and
             (Test-Path -LiteralPath (Join-Path $cursor.FullName $probeRelative))) {
@@ -36,7 +36,7 @@ if ([string]::IsNullOrWhiteSpace($SkillsRoot)) {
 }
 else {
     $SkillsRoot = (Resolve-Path -LiteralPath $SkillsRoot).Path
-    $probeRelative = ([string]$manifest.required_atomic_skills[0].suite_path).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $probeRelative = ([string]$manifest.required_specialty_skills[0].suite_path).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
     $layout = if ((Test-Path -LiteralPath (Join-Path $SkillsRoot $probeRelative))) { 'suite' } else { 'flat' }
 }
 
@@ -68,11 +68,11 @@ function Test-SkillPresent {
     }
 }
 
-# The complete router bundle requires all 13 atomic skills. Atomic skills remain
+# The complete router bundle requires all 13 specialty skills. Specialty skills remain
 # independently installable, but a partial set is not a complete router bundle.
-$atomicRows = @($manifest.required_atomic_skills) | ForEach-Object { Test-SkillPresent -Item $_ }
-$atomicPresentCount = @($atomicRows | Where-Object { $_.Present -and $_.NameMatches }).Count
-$atomicTotal = @($manifest.required_atomic_skills).Count
+$specialtyRows = @($manifest.required_specialty_skills) | ForEach-Object { Test-SkillPresent -Item $_ }
+$specialtyPresentCount = @($specialtyRows | Where-Object { $_.Present -and $_.NameMatches }).Count
+$specialtyTotal = @($manifest.required_specialty_skills).Count
 
 $entryFile = Join-Path $skillDir 'SKILL.md'
 $entryPresent = Test-Path -LiteralPath $entryFile
@@ -99,18 +99,18 @@ Write-Output "Profile: $($manifest.profile)"
 Write-Output "Layout: $layout"
 Write-Output "Root: $SkillsRoot"
 
-Write-Output "`nRequired atomic skills ($atomicPresentCount/$atomicTotal valid):"
-$atomicRows | Format-Table -AutoSize
+Write-Output "`nRequired specialty skills ($specialtyPresentCount/$specialtyTotal valid):"
+$specialtyRows | Format-Table -AutoSize
 
 $sharedRows | Format-Table -AutoSize
 
 $passed = $entryPresent -and $entryNameMatches -and
-    ($atomicPresentCount -eq $atomicTotal) -and
+    ($specialtyPresentCount -eq $specialtyTotal) -and
     -not ($sharedRows.Present -contains $false)
 
 Write-Output "EntryPresent=$entryPresent"
 Write-Output "EntryNameMatches=$entryNameMatches"
-Write-Output "RequiredAtomicSkillsValid=$atomicPresentCount/$atomicTotal"
+Write-Output "RequiredSpecialtySkillsValid=$specialtyPresentCount/$specialtyTotal"
 
 if (-not $passed) {
     Write-Error 'Industry researcher complete bundle validation failed.'
