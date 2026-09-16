@@ -72,18 +72,18 @@
   "source_skill_sha256": {
     "hehe-industry-researcher": "736f2b30da7152fade7d3c3f7fd5c29a0d9dec908bfdda0dfcbb860f66904be9",
     "hehe-market-sizing": "2ef339d0dc1d8bf2ede5cc65611c19178e17c664ae00bff377ca2048200473e8",
-    "hehe-industry-chain-map": "29dd6bc50da83ca2eafb13d91c9f17d9fd939abc8cfe34073d3a08a2b0871487",
-    "hehe-business-model": "f209646f31bad34c9fe59330f39c35c5c2c934a17171bfb61c990cf65578f8f6",
+    "hehe-industry-chain-map": "2d45d077fac0d9d1325fd37f7e5dff75c3e4fae60c4914e739232ca3b294dbfa",
+    "hehe-business-model": "abb6075abcd696375c937c75b5bcb85dac19105db8406bfe385c5de6fb64abd1",
     "hehe-competitive-landscape": "be66f37ef9bd73f4af16595d638d520d4f5ba7d07e1b81f58a6e909d1a99325d",
     "hehe-pest-analysis": "d4ee3633325ea5e511b9a8a86bd65de1953ff9bc13dd867e7032c5c3d54a660d",
-    "hehe-trend-analysis": "c82bd568de2eac53973eeed263eb4bfeace46ce1d05c9ef47ee808c4487368ad",
-    "hehe-industry-drivers": "4a5559ea14ecef762a1f190ad42aa5d77a18e1f9b3eac47299a0fa80cddf3a27",
-    "hehe-industry-pain-points": "135296aae4e9be6e26747e91342bfaaa33380ab83fdd8690ed90128c3a67a0e1",
-    "hehe-company-profile": "99076dab4e07432ec690c8548c333d0598263c778ea4e4eebae68a8c29fe6704",
-    "hehe-financial-analysis": "4fa3a4546849ea8f6e298518296009cc7f8bce4ca80852957c1a058df9d27922",
-    "hehe-governance-capital-allocation": "b68cf7b56d7af8b2d7b658d26f8e53b79fea0cb4a02ab7d505e6735a88c42108",
-    "hehe-valuation-analysis": "682488486d3c593602301d2a895766643db204bcb8ad57c8b0badb60dff4b804",
-    "hehe-investment-logic": "5761ac2d37fcf30cb72deaa970f0c9433f297c3cae2037c71d02465b866ac250"
+    "hehe-trend-analysis": "1c65fcd69c6685b242cfbbaaf0415f36f6062eb9bad4375aa3ee1b491ced963f",
+    "hehe-industry-drivers": "0dfcad39b22a31ec06a113dcb32d2a82ca0538d1f56f1f7e7bf2bfc0c5704125",
+    "hehe-industry-pain-points": "be50db2a5022827cd756eebea61e74fda0baf5fb6349ad2777d67a55f0a686d5",
+    "hehe-company-profile": "5b35e982790e8deb58337b8224ed3db448e31799bb7f8d848645041f681bdbfc",
+    "hehe-financial-analysis": "81019baa28121813507608b1a29505985dc711b011eab132b41282730380a664",
+    "hehe-governance-capital-allocation": "d728663fbb839a66cb0885b1eb1019625bbb3801f0ca8aa773200b57a7f7780f",
+    "hehe-valuation-analysis": "5230389649fcf37b1b425fc6e5959080a6831c31b88709e462f8e4380122e95a",
+    "hehe-investment-logic": "6b15469b18f33aec4afe405f2f82195296a729c307edfeac7434225d4c079286"
   },
   "license": "MIT"
 }
