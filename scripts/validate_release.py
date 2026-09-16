@@ -67,6 +67,13 @@ def main() -> int:
     manifest = json.loads(read_text(manifest_path))
     skills = manifest.get("skills", [])
     names = [item.get("name") for item in skills]
+    name_exceptions = manifest.get("name_exceptions", [])
+    if "baojie" not in name_exceptions:
+        errors.append("baojie must keep its unprefixed public name")
+    prefixed_exceptions = {
+        name: re.compile(rf"(?<![A-Za-z0-9-]){re.escape(manifest.get('namespace', 'hehe-') + name)}(?![A-Za-z0-9-])")
+        for name in name_exceptions if isinstance(name, str)
+    }
     if manifest.get("display_name") != "盒盒行业研究技能包":
         errors.append("release display_name is not 盒盒行业研究技能包")
     if len(names) != 14 or len(set(names)) != 14:
@@ -102,6 +109,9 @@ def main() -> int:
             for label, pattern in PRIVATE_PATTERNS.items():
                 if pattern.search(text):
                     errors.append(f"{label}: {rel}")
+            for name, pattern in prefixed_exceptions.items():
+                if pattern.search(text):
+                    errors.append(f"incorrectly prefixed name ({name}): {rel}")
 
     entry = manifest.get("entry_skill")
     if entry != "hehe-industry-researcher":
