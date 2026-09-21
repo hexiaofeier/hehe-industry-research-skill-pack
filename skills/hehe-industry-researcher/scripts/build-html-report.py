@@ -181,22 +181,31 @@ def build(args: argparse.Namespace) -> dict[str, object]:
     summary_section = page.find("section")
     if summary_section is None:
         raise ValueError("无法建立核心摘要区块")
-    summary_paragraphs = summary_section.find_all("p", recursive=False)
-    if summary_paragraphs:
-        summary_grid = doc.new_tag("div", attrs={"class": "summary-grid"})
-        for paragraph in summary_paragraphs:
+    summary_card_count = 0
+    current_grid: Tag | None = None
+    for child in list(summary_section.children):
+        if isinstance(child, NavigableString) and not child.strip():
+            continue
+        if isinstance(child, Tag) and child.name == "p":
+            if current_grid is None:
+                current_grid = doc.new_tag("div", attrs={"class": "summary-grid"})
+                child.insert_before(current_grid)
             card = doc.new_tag("article", attrs={"class": "summary-card"})
-            paragraph.extract()
-            card.append(paragraph)
-            summary_grid.append(card)
-        summary_section.find("div", class_="section-head").insert_after(summary_grid)
+            child.extract()
+            card.append(child)
+            current_grid.append(card)
+            summary_card_count += 1
+        else:
+            current_grid = None
 
     for table in list(page.find_all("table")):
         wrapper = doc.new_tag("div", attrs={"class": "table-wrap"})
         table.wrap(wrapper)
 
-    summary_text = summary_section.get_text(" ", strip=True)
-    summary_text = re.sub(r"^00\s*核心摘要\s*", "", summary_text)
+    summary_lead = summary_section.select_one(".summary-card p")
+    if summary_lead is None:
+        summary_lead = summary_section.find(["p", "li"])
+    summary_text = summary_lead.get_text(" ", strip=True) if summary_lead else title
     subtitle_match = re.match(r"(.+?[。！？])", summary_text)
     subtitle = subtitle_match.group(1) if subtitle_match else summary_text[:120]
 
@@ -256,7 +265,7 @@ def build(args: argparse.Namespace) -> dict[str, object]:
         "h2": source_h2_count,
         "h3": source_h3_count,
         "tables": source_table_count,
-        "summary_cards": len(summary_paragraphs),
+        "summary_cards": summary_card_count,
         "anchor_ids": anchor_ids,
         "internal_links_in_static_html": internal_links,
         "content_match": True,
