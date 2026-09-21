@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-14-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.09.21--rc4-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.09.21--rc5-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
@@ -140,6 +140,14 @@
 所有专项都必须交付 Markdown 主报告。完整行业研究、完整企业研究和行业＋企业研究还会生成同内容、可离线阅读的 HTML 阅读版；单独专项不自动增加综合 HTML。Excel、图源、结构数据和其他离线预览按照专项规则及实际计算需求触发。
 
 最终综合报告采用摘要优先结构：只有一个一级标题，第一节是核心摘要，随后说明研究范围与口径，再按研究问题展开主体。Skill 调用情况放在研究范围末尾，逐行列出实际调用、降级和未调用情况。
+
+总入口内置公开的 Markdown→HTML 生成器。安装 `Markdown` 和 `beautifulsoup4` 后，可在 `hehe-industry-researcher` 目录运行：
+
+```bash
+python scripts/build-html-report.py 主报告.md 主报告.html --report-type "行业＋企业研究报告" --scope "中国目标行业＋目标企业" --data-cutoff "YYYY-MM-DD" --version "V1.0"
+```
+
+生成器默认不覆盖已有文件，会检查正文一致性、标题结构、目录锚点和远程图片。二、三级标题合计超过 40 个的长报告，目录自动只列二级标题；正文内容和标题层级保持不变。无法运行生成器时，仍可按包内 HTML 模板手工制作并执行同样的交付检查。
 
 ## 完整报告的正文深度
 

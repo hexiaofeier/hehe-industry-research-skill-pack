@@ -77,7 +77,8 @@
     "references/专项分析与交付流程.md",
     "references/最终交付流程.md",
     "references/HTML报告交付规范.md",
-    "assets/研究报告HTML模板.html"
+    "assets/研究报告HTML模板.html",
+    "scripts/build-html-report.py"
   ],
   "excluded_from_public_package": [
     "_本地维护",

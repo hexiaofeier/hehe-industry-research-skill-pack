@@ -2,7 +2,7 @@
   "schema_version": 1,
   "display_name": "盒盒行业研究技能包",
   "repository_slug": "hehe-industry-research-skill-pack",
-  "version": "2026.09.21-rc4",
+  "version": "2026.09.21-rc5",
   "namespace": "hehe-",
   "entry_skill": "hehe-industry-researcher",
   "skills": [
