@@ -2,7 +2,7 @@
   "schema_version": 1,
   "display_name": "盒盒行业研究技能包",
   "repository_slug": "hehe-industry-research-skill-pack",
-  "version": "2026.09.15-rc3",
+  "version": "2026.09.21-rc4",
   "namespace": "hehe-",
   "entry_skill": "hehe-industry-researcher",
   "skills": [
@@ -70,7 +70,7 @@
     "baojie"
   ],
   "source_skill_sha256": {
-    "hehe-industry-researcher": "736f2b30da7152fade7d3c3f7fd5c29a0d9dec908bfdda0dfcbb860f66904be9",
+    "hehe-industry-researcher": "379d38a28eab4d4c78de87e959efc12762be77a5a57b88e0dbce5b673d6466ed",
     "hehe-market-sizing": "2ef339d0dc1d8bf2ede5cc65611c19178e17c664ae00bff377ca2048200473e8",
     "hehe-industry-chain-map": "2d45d077fac0d9d1325fd37f7e5dff75c3e4fae60c4914e739232ca3b294dbfa",
     "hehe-business-model": "abb6075abcd696375c937c75b5bcb85dac19105db8406bfe385c5de6fb64abd1",

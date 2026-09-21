@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-14-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.09.15--rc3-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.09.21--rc4-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
@@ -27,7 +27,7 @@
   → 统一检索与材料审核
   → 逐项完成适用专项
   → 检查方法、证据、计算、附件与正文完整度
-  → 按研究问题整合最终 Markdown 报告
+  → 按研究问题整合最终 Markdown 主报告和同内容 HTML 阅读版
 ```
 
 专项报告不会被综合报告替代。综合报告也不会把 13 份专项原文简单首尾拼接。
@@ -133,10 +133,11 @@
 │   └── 按题触发的 Excel、图源或结构数据
 └── 03_最终交付/
     ├── 文本研究报告.md
+    ├── 文本研究报告.html
     └── 交付清单.md
 ```
 
-所有专项都必须交付 Markdown 主报告。Excel、图源、结构数据和离线预览按照专项规则及实际计算需求触发。
+所有专项都必须交付 Markdown 主报告。完整行业研究、完整企业研究和行业＋企业研究还会生成同内容、可离线阅读的 HTML 阅读版；单独专项不自动增加综合 HTML。Excel、图源、结构数据和其他离线预览按照专项规则及实际计算需求触发。
 
 最终综合报告采用摘要优先结构：只有一个一级标题，第一节是核心摘要，随后说明研究范围与口径，再按研究问题展开主体。Skill 调用情况放在研究范围末尾，逐行列出实际调用、降级和未调用情况。
 
@@ -217,7 +218,7 @@ git clone https://github.com/hexiaofeier/hehe-industry-research-skill-pack.git
 
 ```text
 使用 $hehe-industry-researcher 研究中国商用服务机器人行业。
-先向我提出开题问题，再形成完整 Markdown 报告和必要附件。
+先向我提出开题问题，再形成完整 Markdown 主报告、同内容 HTML 阅读版和必要附件。
 ```
 
 行业＋企业研究：

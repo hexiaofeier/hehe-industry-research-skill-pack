@@ -95,6 +95,16 @@ foreach ($item in @($manifest.shared_public_files)) {
     }
 }
 
+$localRows = @()
+foreach ($relativePath in @($manifest.required_local_files)) {
+    $localPath = Join-Path $skillDir ([string]$relativePath).Replace('/', [System.IO.Path]::DirectorySeparatorChar)
+    $localRows += [pscustomobject]@{
+        LocalFile = [string]$relativePath
+        Present   = Test-Path -LiteralPath $localPath -PathType Leaf
+        Path      = $localPath
+    }
+}
+
 Write-Output "Profile: $($manifest.profile)"
 Write-Output "Layout: $layout"
 Write-Output "Root: $SkillsRoot"
@@ -104,13 +114,18 @@ $specialtyRows | Format-Table -AutoSize
 
 $sharedRows | Format-Table -AutoSize
 
+Write-Output "`nRequired local files:"
+$localRows | Format-Table -AutoSize
+
 $passed = $entryPresent -and $entryNameMatches -and
     ($specialtyPresentCount -eq $specialtyTotal) -and
-    -not ($sharedRows.Present -contains $false)
+    -not ($sharedRows.Present -contains $false) -and
+    -not ($localRows.Present -contains $false)
 
 Write-Output "EntryPresent=$entryPresent"
 Write-Output "EntryNameMatches=$entryNameMatches"
 Write-Output "RequiredSpecialtySkillsValid=$specialtyPresentCount/$specialtyTotal"
+Write-Output "RequiredLocalFilesValid=$(@($localRows | Where-Object Present).Count)/$(@($localRows).Count)"
 
 if (-not $passed) {
     Write-Error 'Industry researcher complete bundle validation failed.'

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>[报告类型] HTML 阅读版</title>
+  <style>
+    :root{--canvas:#eef3f7;--paper:#fff;--ink:#17212b;--muted:#667482;--line:#dce4ea;--blue:#245b78;--blue-deep:#173f58;--blue-soft:#dceaf3;--red:#a9474a;--amber:#b8822d;--green:#4f806b;--shadow:0 18px 50px rgba(23,63,88,.12)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--canvas);color:var(--ink);font:16px/1.78 Inter,"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif}
+    a{color:var(--blue);text-underline-offset:3px}button{font:inherit}.skip{position:fixed;left:16px;top:-64px;z-index:20;background:#fff;color:var(--blue-deep);padding:8px 12px;border-radius:6px}.skip:focus{top:16px}
+    .rail{position:fixed;inset:0 auto 0 0;width:286px;background:var(--blue-deep);color:#edf5f9;padding:30px 24px;overflow:auto;z-index:10}.brand{padding-bottom:22px;border-bottom:1px solid rgba(255,255,255,.2)}.brand small{display:block;color:#aac4d2;letter-spacing:.12em}.brand strong{display:block;margin-top:7px;font-size:20px;line-height:1.35}.rail nav{margin:24px 0}.rail nav a{display:block;color:#bed1dc;text-decoration:none;padding:8px 10px;border-left:3px solid transparent;font-size:14px;line-height:1.4}.rail nav a[data-level="3"]{padding-left:24px;font-size:13px}.rail nav a:hover,.rail nav a.active{color:#fff;background:rgba(255,255,255,.08);border-left-color:#fff}.rail-actions{display:grid;gap:8px}.rail button{width:100%;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;border-radius:7px;padding:9px 12px;cursor:pointer}
+    .mobile-toc{display:none;margin:0 0 20px;border:1px solid var(--line);border-radius:10px;background:#fff}.mobile-toc summary{cursor:pointer;padding:12px 16px;color:var(--blue-deep);font-weight:700}.mobile-toc nav{padding:0 16px 14px}.mobile-toc a{display:block;padding:5px 0;text-decoration:none}
+    main{width:min(1060px,calc(100% - 334px));margin:28px 28px 54px 314px;background:var(--paper);box-shadow:var(--shadow)}.page{padding:70px 76px}.cover{min-height:620px;display:grid;align-content:center;padding:78px;background:linear-gradient(145deg,var(--blue-deep) 0 48%,#245b78 48% 72%,#fff 72%);color:#fff}.eyebrow{font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#b9d0dc}.cover h1{max-width:760px;margin:18px 0;font-size:clamp(36px,5.8vw,68px);line-height:1.08;letter-spacing:-.03em}.cover .dek{max-width:700px;margin:0;font-size:21px;line-height:1.55;color:#dceaf1}.meta{display:flex;flex-wrap:wrap;gap:10px 24px;margin-top:42px;color:#c5d8e2;font-size:14px}.meta span{border-top:1px solid rgba(255,255,255,.38);padding-top:8px}
+    .section{padding:70px 0;border-top:1px solid var(--line)}.section:first-child{border-top:0}.section-head{display:grid;grid-template-columns:58px 1fr;gap:18px;align-items:start;margin-bottom:28px}.section-no{color:var(--red);font-size:15px;font-weight:800;letter-spacing:.08em;padding-top:8px}.section h2{margin:0;color:var(--blue-deep);font-size:32px;line-height:1.3;letter-spacing:-.02em}.section h3{margin:42px 0 12px;color:var(--blue);font-size:21px}.lead{font-size:20px;line-height:1.65;color:#334656}.summary-grid,.metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.summary-card{padding:22px;border:1px solid var(--line);border-top:4px solid var(--blue);background:#fbfdfe}.summary-card b{display:block;color:var(--blue-deep);font-size:18px;line-height:1.45}.summary-card p{margin:9px 0 0;color:#526473}.metric-grid{grid-template-columns:repeat(3,minmax(0,1fr));margin:24px 0}.metric{padding:20px;background:var(--blue-soft);border-radius:10px}.metric strong{display:block;color:var(--blue-deep);font-size:30px;line-height:1.1}.metric span{display:block;margin-top:8px;color:#536979;font-size:14px}
+    .read{margin:24px 0;padding:18px 20px;border-left:5px solid var(--blue);background:#f5f8fa}.read b{display:block;margin-bottom:5px}.read.red{border-color:var(--red);background:#fbf1f1}.read.amber{border-color:var(--amber);background:#fcf7ec}.read.green{border-color:var(--green);background:#eef7f2}
+    .table-wrap{overflow-x:auto;margin:20px 0;border:1px solid var(--line);border-radius:8px}table{width:100%;min-width:680px;border-collapse:collapse}th,td{padding:13px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}th{background:var(--blue-deep);color:#fff;font-size:14px}tbody tr:last-child td{border-bottom:0}td.num{text-align:right;font-variant-numeric:tabular-nums}
+    figure{margin:30px 0}figure svg{display:block;width:100%;height:auto;background:#f8fafc;border:1px solid var(--line);border-radius:10px}figcaption{margin-top:9px;color:var(--muted);font-size:13px}.sources{padding-left:22px}.sources li{margin:8px 0;color:#435463}.footer{padding:28px 76px 44px;border-top:1px solid var(--line);color:var(--muted);font-size:13px}
+    @media(max-width:1080px){.rail{display:none}main{width:min(940px,calc(100% - 32px));margin:16px auto 42px}.mobile-toc{display:block}.page{padding:52px 54px}.cover{min-height:520px;padding:58px}}
+    @media(max-width:720px){body{background:#fff}main{width:100%;margin:0;box-shadow:none}.cover{min-height:500px;padding:36px 24px;background:linear-gradient(154deg,var(--blue-deep) 0 68%,#245b78 68%)}.cover h1{font-size:40px}.cover .dek{font-size:18px}.page{padding:34px 22px}.section{padding:48px 0}.section-head{grid-template-columns:1fr;gap:4px}.section h2{font-size:27px}.summary-grid,.metric-grid{grid-template-columns:1fr}.footer{padding:24px 22px 40px}}
+    @media print{@page{size:A4;margin:15mm}.rail,.mobile-toc,.screen-only,.skip{display:none!important}body{background:#fff;font-size:10.5pt}main{width:auto;margin:0;box-shadow:none}.cover{min-height:245mm;print-color-adjust:exact;-webkit-print-color-adjust:exact}.page{padding:0}.section{break-before:page;padding:14mm 0 0}.summary-card,.metric,.read,figure,.table-wrap{break-inside:avoid}.footer{padding:12mm 0 0}}
+  </style>
+</head>
+<body>
+  <a class="skip" href="#report">跳到正文</a>
+  <aside class="rail" aria-label="报告目录">
+    <div class="brand"><small>RESEARCH REPORT</small><strong>[报告类型]</strong></div>
+    <nav class="toc" aria-label="章节目录"></nav>
+    <div class="rail-actions"><button type="button" onclick="window.print()">打印 / 导出 PDF</button></div>
+  </aside>
+
+  <main id="report">
+    <header class="cover">
+      <div class="eyebrow">[报告类型] · HTML 阅读版</div>
+      <h1>[研究主题]：用一句结论概括核心判断</h1>
+      <p class="dek">用两到三句话交代研究对象、核心变化及报告服务的决策。</p>
+      <div class="meta"><span>研究范围：地区 / 品类</span><span>数据截止：YYYY-MM-DD</span><span>版本：V1.0</span></div>
+    </header>
+
+    <div class="page">
+      <details class="mobile-toc"><summary>展开目录</summary><nav class="toc" aria-label="移动端章节目录"></nav></details>
+
+      <section class="section" aria-labelledby="summary">
+        <div class="section-head"><div class="section-no">00</div><h2 id="summary">核心摘要：用关键判断直接回答研究问题</h2></div>
+        <div class="summary-grid">
+          <article class="summary-card"><b>判断一：直接回答首要研究问题</b><p>用关键证据和含义解释，不写研究过程。</p></article>
+          <article class="summary-card"><b>判断二：说明主要变化</b><p>一张卡只承载一个判断。</p></article>
+          <article class="summary-card"><b>判断三：说明关键机制</b><p>写清变化如何影响研究对象。</p></article>
+          <article class="summary-card"><b>判断四：说明比较结果</b><p>写清主要对象及差异。</p></article>
+          <article class="summary-card"><b>判断五：说明经营或价值含义</b><p>写清结果对决策的影响。</p></article>
+          <article class="summary-card"><b>判断六：说明机会与风险</b><p>把成立条件直接写进判断。</p></article>
+        </div>
+      </section>
+
+      <section class="section" aria-labelledby="analysis-one">
+        <div class="section-head"><div class="section-no">01</div><h2 id="analysis-one">主体分析一：用结论型标题说明本节核心发现</h2></div>
+        <p class="lead">本段先给结论，再用数据、案例和因果关系推进论证。</p>
+        <div class="metric-grid">
+          <div class="metric"><strong>XX</strong><span>核心指标一｜时间与口径</span></div>
+          <div class="metric"><strong>XX%</strong><span>核心指标二｜时间与口径</span></div>
+          <div class="metric"><strong>XX</strong><span>比较对象或样本数量</span></div>
+        </div>
+        <h3 id="analysis-detail">分项判断：用证据解释最重要的差异</h3>
+        <p>在这里放置支撑结论的正文。每段只完成一个推理步骤，并在相关句后标注来源。</p>
+        <div class="read red"><b>关键判断</b>用一句话写出最影响决策的结论或风险。</div>
+        <figure>
+          <svg viewBox="0 0 760 320" role="img" aria-labelledby="chart-title chart-desc">
+            <title id="chart-title">示例：三个细分市场的规模比较</title><desc id="chart-desc">细分市场 A 最大，B 次之，C 最小。</desc>
+            <rect width="760" height="320" fill="#f8fafc"/><line x1="90" y1="250" x2="700" y2="250" stroke="#bfcbd3"/>
+            <rect x="140" y="90" width="120" height="160" fill="#245b78"/><rect x="330" y="140" width="120" height="110" fill="#a9474a"/><rect x="520" y="180" width="120" height="70" fill="#b8822d"/>
+            <g fill="#17212b" font-size="18" text-anchor="middle"><text x="200" y="280">细分 A</text><text x="390" y="280">细分 B</text><text x="580" y="280">细分 C</text></g>
+          </svg>
+          <figcaption>图 1｜示例图表。来源：填写可核验来源和统计口径。</figcaption>
+        </figure>
+      </section>
+
+      <section class="section" aria-labelledby="analysis-two">
+        <div class="section-head"><div class="section-no">02</div><h2 id="analysis-two">主体分析二：说明机制、比较结果及其影响</h2></div>
+        <p class="lead">用图解释关系，用表补充对象、指标和证据字段。</p>
+        <div class="table-wrap"><table>
+          <thead><tr><th>对象或维度</th><th>主要事实</th><th>判断依据</th><th>结论与影响</th></tr></thead>
+          <tbody><tr><td>对象 A</td><td>关键事实</td><td>数据或材料</td><td>判断及其含义</td></tr><tr><td>对象 B</td><td>关键事实</td><td>数据或材料</td><td>判断及其含义</td></tr><tr><td>对象 C</td><td>关键事实</td><td>数据或材料</td><td>判断及其含义</td></tr></tbody>
+        </table></div>
+        <div class="read amber"><b>观察项</b>写明仍会改变判断的条件，并说明观察指标。</div>
+        <div class="read green"><b>已验证结果</b>写明已经由多项证据支持的正向变化。</div>
+      </section>
+
+      <section class="section" aria-labelledby="sources">
+        <div class="section-head"><div class="section-no">A</div><h2 id="sources">来源与附件：核心结论可以回到原始材料复核</h2></div>
+        <ol class="sources"><li><a href="https://example.com">来源名称</a>，发布机构，发布日期。</li><li>项目内数据表或附件名称，文件路径。</li></ol>
+      </section>
+    </div>
+    <footer class="footer">[报告类型] · HTML 阅读版 · 数据截止 YYYY-MM-DD</footer>
+  </main>
+
+  <script>
+    (()=>{const heads=[...document.querySelectorAll('main h2[id],main h3[id]')];const navs=document.querySelectorAll('.toc');for(const nav of navs){for(const h of heads){const a=document.createElement('a');a.href='#'+h.id;a.textContent=h.textContent;a.dataset.level=h.tagName==='H3'?'3':'2';nav.appendChild(a)}}const links=[...document.querySelectorAll('.rail .toc a')];if('IntersectionObserver'in window){const obs=new IntersectionObserver(es=>{for(const e of es){if(e.isIntersecting){links.forEach(a=>a.classList.toggle('active',a.hash==='#'+e.target.id))}}},{rootMargin:'-18% 0px -70% 0px'});heads.forEach(h=>obs.observe(h))}})();
+  </script>
+</body>
+</html>

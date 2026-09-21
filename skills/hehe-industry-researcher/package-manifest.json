@@ -67,6 +67,18 @@
     "电子表格生成与公式重算"
   ],
   "shared_public_files": [],
+  "required_local_files": [
+    "references/研究开题流程.md",
+    "references/简单开题模板.md",
+    "references/研究项目目录模板.md",
+    "references/信息搜索流程.md",
+    "references/分析准备流程.md",
+    "references/研究Skill职能结构.md",
+    "references/专项分析与交付流程.md",
+    "references/最终交付流程.md",
+    "references/HTML报告交付规范.md",
+    "assets/研究报告HTML模板.html"
+  ],
   "excluded_from_public_package": [
     "_本地维护",
     "90_历史备份",
