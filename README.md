@@ -5,11 +5,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-14-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.09.21--rc6-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.09.21--rc7-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
 “盒盒”是这套原创研究方法的识别前缀，因此公开版本统一使用 `hehe-*` 名称。每个专项都能独立调用；完整研究则由总入口负责开题、搜索组织、材料审核、专项验收和最终整合。
+
+## 主要更新：交付 HTML 报告
+
+**2026-09-21 · rc7**：完整行业研究、企业研究和行业＋企业研究，现在默认同时交付 **Markdown 主报告＋同内容 HTML 阅读版**。
+
+- **Markdown 用于编辑，HTML 用于阅读。** 保留完整正文、数字、表格、图表和来源链接，打开浏览器即可查看。
+- **统一报告版式。** 封面、侧栏目录、摘要卡、章节标题和正文表格使用随包模板；摘要引言与收尾通栏，并列结论排成卡片。
+- **兼顾电脑、手机和打印。** 桌面通过目录定位章节，手机采用折叠目录和单列布局，支持离线阅读与浏览器打印／导出 PDF。
+
+单独专项仍以各自的 Markdown 报告和必要附件为主；明确要求时可增加 HTML 阅读版。[查看报告封面和内容示例](#报告封面和内容示例)。
 
 ## 为什么做这套技能包
 
@@ -139,7 +149,7 @@
 
 所有专项都必须交付 Markdown 主报告。完整行业研究、完整企业研究和行业＋企业研究还会生成同内容、可离线阅读的 HTML 阅读版；单独专项不自动增加综合 HTML。Excel、图源、结构数据和其他离线预览按照专项规则及实际计算需求触发。
 
-最终综合报告采用摘要优先结构：只有一个一级标题，第一节是核心摘要，随后说明研究范围与口径，再按研究问题展开主体。Skill 调用情况放在研究范围末尾，逐行列出实际调用、降级和未调用情况。
+最终综合报告采用摘要优先结构：只有一个一级标题，第一节是核心摘要，随后说明研究范围与口径，再按研究问题展开主体。Skill 调用情况放在交付清单中，逐行列出实际调用、降级和未调用情况。
 
 总入口内置公开的 Markdown→HTML 生成器。安装 `Markdown` 和 `beautifulsoup4` 后，可在 `hehe-industry-researcher` 目录运行：
 
@@ -148,6 +158,28 @@ python scripts/build-html-report.py 主报告.md 主报告.html --report-type "�
 ```
 
 生成器默认不覆盖已有文件，会检查正文一致性、标题结构、目录锚点和远程图片。固定使用随包模板，目录只列二级章节；保留原文编号，摘要并列结论排卡片，引言、收尾和普通段落保持通栏。正文内容和标题层级保持不变。无法运行生成器时，仍可按包内 HTML 模板手工制作并执行同样的交付检查。
+
+## 报告封面和内容示例
+
+以下为《AI 漫剧行业发展现状与出海机会》由随包生成器生成的 HTML 阅读版实图，展示封面、核心摘要和正文表格。点击图片可查看大图。
+
+### 报告封面
+
+封面呈现研究主题、核心判断、研究范围、数据截止日和版本；左侧目录用于跳转到具体章节。
+
+![HTML 报告封面：AI 漫剧行业发展现状与出海机会](docs/images/html-report-cover.png)
+
+### 核心摘要
+
+先给出主要结论及其证据和含义。并列判断在桌面端以双列卡片呈现，在手机端自动改为单列。
+
+![HTML 报告核心摘要：六条结论与对应解释](docs/images/html-report-summary.png)
+
+### 正文与表格
+
+正文沿用 Markdown 的章节顺序和编号，保留分析过程、数据口径、比较表格和来源链接。
+
+![HTML 报告正文：市场规模分析、数据表格与来源](docs/images/html-report-content.png)
 
 ## 完整报告的正文深度
 
@@ -250,6 +282,7 @@ hehe-industry-research-skill-pack/
 ├── README.md
 ├── LICENSE
 ├── release-manifest.json
+├── docs/images/                 # README 中的报告实图
 ├── scripts/
 │   └── validate_release.py
 └── skills/
