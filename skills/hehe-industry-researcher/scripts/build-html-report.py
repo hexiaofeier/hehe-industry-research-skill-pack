@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import html
 import json
 import re
 import sys
@@ -40,11 +39,57 @@ def normalize_old_tables(text: str) -> str:
     return "\n".join(normalized)
 
 
-def extract_template_part(template: str, tag: str) -> str:
-    match = re.search(rf"<{tag}[^>]*>(.*?)</{tag}>", template, re.S | re.I)
-    if not match:
-        raise ValueError(f"HTML 模板缺少 <{tag}> 区块")
-    return match.group(1).strip()
+def layout_summary(section: Tag, doc: BeautifulSoup) -> int:
+    """只把并列结论排成卡片，保留引言、收尾及普通段落的原位通栏。"""
+    count = 0
+    grid: Tag | None = None
+    for child in list(section.children):
+        if isinstance(child, NavigableString) and not child.strip():
+            continue
+        if not isinstance(child, Tag):
+            grid = None
+            continue
+        if child.name in {"ol", "ul"}:
+            items = child.find_all("li", recursive=False)
+            if items:
+                child["class"] = [*child.get("class", []), "summary-grid"]
+                ordinal = int(child.get("start", 1))
+                for item in items:
+                    ordinal = int(item.get("value", ordinal))
+                    item["class"] = [*item.get("class", []), "summary-card"]
+                    lead = next((x for x in item.contents if str(x).strip()), None)
+                    if isinstance(lead, Tag) and lead.name == "p":
+                        lead = next((x for x in lead.contents if str(x).strip()), None)
+                    if isinstance(lead, Tag) and lead.name in {"strong", "b"}:
+                        lead["class"] = [*lead.get("class", []), "summary-title"]
+                    if child.name == "ol":
+                        number = doc.new_tag("span", attrs={"class": "summary-number", "aria-hidden": "true"})
+                        number.string = f"{ordinal}. "
+                        if isinstance(lead, Tag) and "summary-title" in lead.get("class", []):
+                            lead.insert(0, number)
+                        else:
+                            item.insert(0, number)
+                    ordinal += 1
+                    count += 1
+            grid = None
+            continue
+        lead = next((x for x in child.contents if str(x).strip()), None)
+        # 段落式摘要须有明确的编号结论，不能把整段加粗的引言误认成卡片。
+        numbered = (
+            child.name == "p" and isinstance(lead, Tag) and lead.name in {"strong", "b"}
+            and re.match(r"^(?:\d+[.、．）)]|[一二三四五六七八九十]+[、.．）)])", lead.get_text(strip=True))
+        )
+        if numbered:
+            if grid is None:
+                grid = doc.new_tag("div", attrs={"class": "summary-grid"})
+                child.insert_before(grid)
+            child["class"] = [*child.get("class", []), "summary-card"]
+            lead["class"] = [*lead.get("class", []), "summary-title"]
+            grid.append(child.extract())
+            count += 1
+        else:
+            grid = None
+    return count
 
 
 def text_key(value: str) -> str:
@@ -138,28 +183,14 @@ def build(args: argparse.Namespace) -> dict[str, object]:
     source_h3_count = len(source_soup.find_all("h3"))
     source_table_count = len(source_soup.find_all("table"))
 
-    template = template_path.read_text(encoding="utf-8-sig")
-    style = extract_template_part(template, "style")
-    script = extract_template_part(template, "script")
-    style += """
-    .page p{margin:0 0 18px}.page ul,.page ol{margin:12px 0 22px;padding-left:1.5em}
-    .page li{margin:7px 0}.section h4,.section h5,.section h6{margin:28px 0 10px;color:var(--muted)}
-    .section code{padding:.1em .35em;border-radius:4px;background:#eef3f7;font-family:Consolas,monospace}
-    .section strong{color:#263b49}.source-content{overflow-wrap:anywhere}
-    .summary-card>p:last-child{margin-bottom:0}
-    """
-
-    doc = BeautifulSoup("", "html.parser")
-    page = doc.new_tag("div", attrs={"class": "page source-content"})
-    mobile_toc = doc.new_tag("details", attrs={"class": "mobile-toc"})
-    mobile_summary = doc.new_tag("summary")
-    mobile_summary.string = "展开目录"
-    mobile_nav = doc.new_tag("nav", attrs={"class": "toc", "aria-label": "移动端章节目录"})
-    mobile_toc.extend([mobile_summary, mobile_nav])
-    page.append(mobile_toc)
+    doc = BeautifulSoup(template_path.read_text(encoding="utf-8-sig"), "html.parser")
+    page = doc.select_one(".page")
+    if page is None:
+        raise ValueError("HTML 模板缺少 .page 正文容器")
+    page.clear()
+    page["class"] = ["page", "source-content"]
 
     current: Tag | None = None
-    section_number = 0
     for node in list(source_soup.contents):
         if isinstance(node, NavigableString) and not node.strip():
             continue
@@ -168,52 +199,34 @@ def build(args: argparse.Namespace) -> dict[str, object]:
             current = doc.new_tag(
                 "section", attrs={"class": "section", "aria-labelledby": heading_id}
             )
-            heading = doc.new_tag("div", attrs={"class": "section-head"})
-            number = doc.new_tag("div", attrs={"class": "section-no"})
-            number.string = f"{section_number:02d}"
-            section_number += 1
-            heading.extend([number, node])
-            current.append(heading)
+            current.append(node)
             page.append(current)
         elif current is not None:
             current.append(node)
+        else:
+            page.append(node)
 
     summary_section = page.find("section")
     if summary_section is None:
         raise ValueError("无法建立核心摘要区块")
-    summary_card_count = 0
-    current_grid: Tag | None = None
-    for child in list(summary_section.children):
-        if isinstance(child, NavigableString) and not child.strip():
-            continue
-        if isinstance(child, Tag) and child.name == "p":
-            if current_grid is None:
-                current_grid = doc.new_tag("div", attrs={"class": "summary-grid"})
-                child.insert_before(current_grid)
-            card = doc.new_tag("article", attrs={"class": "summary-card"})
-            child.extract()
-            card.append(child)
-            current_grid.append(card)
-            summary_card_count += 1
-        else:
-            current_grid = None
+    summary_lead = summary_section.find(["p", "li"])
+    summary_text = summary_lead.get_text(" ", strip=True) if summary_lead else title
+    summary_card_count = layout_summary(summary_section, doc)
 
     for table in list(page.find_all("table")):
         wrapper = doc.new_tag("div", attrs={"class": "table-wrap"})
         table.wrap(wrapper)
 
-    summary_lead = summary_section.select_one(".summary-card p")
-    if summary_lead is None:
-        summary_lead = summary_section.find(["p", "li"])
-    summary_text = summary_lead.get_text(" ", strip=True) if summary_lead else title
+    for image in list(page.find_all("img")):
+        if image.find_parent("figure") is None:
+            wrapper = doc.new_tag("span", attrs={"class": "image-scroll"})
+            image.wrap(wrapper)
     subtitle_match = re.match(r"(.+?[。！？])", summary_text)
     subtitle = subtitle_match.group(1) if subtitle_match else summary_text[:120]
 
     parity_soup = BeautifulSoup(str(page), "html.parser")
-    for number in parity_soup.select(".section-no"):
+    for number in parity_soup.select(".summary-number"):
         number.decompose()
-    for navigation in parity_soup.select(".mobile-toc"):
-        navigation.decompose()
     delivered_text = text_key(parity_soup.get_text(" ", strip=True))
     if delivered_text != baseline_text:
         raise ValueError(
@@ -221,35 +234,23 @@ def build(args: argparse.Namespace) -> dict[str, object]:
             f"Markdown={len(baseline_text)}，HTML={len(delivered_text)}"
         )
 
-    output_html = f"""<!doctype html>
-<html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>{html.escape(title)}｜HTML 阅读版</title>
-  <style>{style}</style>
-</head>
-<body>
-  <a class="skip" href="#report">跳到正文</a>
-  <aside class="rail" aria-label="报告目录">
-    <div class="brand"><small>RESEARCH REPORT</small><strong>{html.escape(args.report_type)}</strong></div>
-    <nav class="toc" aria-label="章节目录"></nav>
-    <div class="rail-actions"><button type="button" onclick="window.print()">打印 / 导出 PDF</button></div>
-  </aside>
-  <main id="report">
-    <header class="cover">
-      <div class="eyebrow">{html.escape(args.report_type)} · HTML 阅读版</div>
-      <h1>{html.escape(title)}</h1>
-      <p class="dek">{html.escape(subtitle)}</p>
-      <div class="meta"><span>研究范围：{html.escape(args.scope)}</span><span>数据截止：{html.escape(args.data_cutoff)}</span><span>版本：{html.escape(args.version)}</span></div>
-    </header>
-    {page}
-    <footer class="footer">{html.escape(args.report_type)} · HTML 阅读版 · 数据截止 {html.escape(args.data_cutoff)}</footer>
-  </main>
-  <script>{script}</script>
-</body>
-</html>
-"""
+    values = {"title": title, "report-type": args.report_type, "scope": args.scope,
+              "data-cutoff": args.data_cutoff, "version": args.version, "subtitle": subtitle}
+    for field, value in values.items():
+        targets = doc.select(f'[data-field="{field}"]')
+        if not targets:
+            raise ValueError(f"HTML 模板缺少 data-field={field}")
+        for target in targets:
+            target.string = value
+            del target["data-field"]
+    doc.title.string = title + "｜HTML 阅读版"
+    for nav in doc.select("nav.toc"):
+        nav.clear()
+        for heading in page.find_all("h2"):
+            link = doc.new_tag("a", href="#" + str(heading["id"]))
+            link.string = heading.get_text(" ", strip=True)
+            nav.append(link)
+    output_html = str(doc)
 
     final_soup = BeautifulSoup(output_html, "html.parser")
     anchor_ids, internal_links = validate_links(final_soup)
