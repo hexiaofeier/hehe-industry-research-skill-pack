@@ -65,7 +65,7 @@
 | 专项 | `hehe-market-sizing` | 市场口径、规模测算、预测情景与敏感性 | 公式 Excel |
 | 专项 | `hehe-industry-chain-map` | 功能链、角色链、四流、瓶颈及替代路径 | Mermaid、结构图、离线 HTML |
 | 专项 | `hehe-business-model` | 付款者、收入、成本、现金、单位经济和增长边界 | 按题生成模型或对比表 |
-| 专项 | `hehe-competitive-landscape` | 竞争场域、企业池、份额、战略群组和标的位置 | 对比表或结构数据 |
+| 专项 | `hehe-competitive-landscape` | 竞争场域、企业池、份额、战略群组和标的位置 | 对比表；按题交付二维竞争定位图、能力矩阵或热力图，图形附可编辑 SVG 与 PNG |
 | 专项 | `hehe-pest-analysis` | 政策、经济、社会、技术因素及行业传导 | 事件表或时间线 |
 | 专项 | `hehe-trend-analysis` | 趋势阶段、信号、替代解释和证伪条件 | 趋势卡或时间序列 |
 | 专项 | `hehe-industry-drivers` | 结果拆解、驱动机制、时滞、持续性和反事实 | 驱动表或计算底稿 |
