@@ -1,4 +1,4 @@
 interface:
   display_name: "投资逻辑"
   short_description: "分析投资吸引力、进入方式、交易可执行性、回报和退出"
-  default_prompt: "使用 $hehe-investment-logic，优先用一道研究场景选择题一并确认研究对象和研究立场；再按需确认投资方式和其他条件，基于现有材料补搜与审核，判断投资吸引力、可进入性、回报、风险和退出。"
+  default_prompt: "使用 $hehe-investment-logic，按五类研究场景承接我的投资问题，将未明确的场景、投资方式与目的一次问清；也可以先帮我比较可行方式，再搜索审核并分析投资吸引力、回报与退出。"

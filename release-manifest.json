@@ -2,7 +2,7 @@
   "schema_version": 1,
   "display_name": "盒盒行业研究技能包",
   "repository_slug": "hehe-industry-research-skill-pack",
-  "version": "2026.09.21-rc7",
+  "version": "2026.10.07-rc8",
   "namespace": "hehe-",
   "entry_skill": "hehe-industry-researcher",
   "skills": [
@@ -82,8 +82,8 @@
     "hehe-company-profile": "5b35e982790e8deb58337b8224ed3db448e31799bb7f8d848645041f681bdbfc",
     "hehe-financial-analysis": "81019baa28121813507608b1a29505985dc711b011eab132b41282730380a664",
     "hehe-governance-capital-allocation": "d728663fbb839a66cb0885b1eb1019625bbb3801f0ca8aa773200b57a7f7780f",
-    "hehe-valuation-analysis": "5230389649fcf37b1b425fc6e5959080a6831c31b88709e462f8e4380122e95a",
-    "hehe-investment-logic": "6b15469b18f33aec4afe405f2f82195296a729c307edfeac7434225d4c079286"
+    "hehe-valuation-analysis": "9573432ec41d8b002d70013cb77c7d6468f3b1b1c0886e578e15e09357e9ec67",
+    "hehe-investment-logic": "36548771fde96b774e4785d4f15b5e98379d3fb6310b1396e6c486465cf3696d"
   },
   "license": "MIT"
 }

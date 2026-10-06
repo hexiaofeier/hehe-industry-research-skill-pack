@@ -5,13 +5,47 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-14-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.09.21--rc7-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.10.07--rc8-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
 “盒盒”是这套原创研究方法的识别前缀，因此公开版本统一使用 `hehe-*` 名称。每个专项都能独立调用；完整研究则由总入口负责开题、搜索组织、材料审核、专项验收和最终整合。
 
 ## Skill 更新说明
+
+### 2026-10-07 · rc8：投资逻辑 × 估值分析联合升级
+
+> **从“这家公司有前景”，走到“什么条件下值得投”。** 先明确投资场景，再把经营增长、资金投入、股权变化和投资者回报连起来。
+
+本次更新 [`hehe-investment-logic`](skills/hehe-investment-logic/) 与 [`hehe-valuation-analysis`](skills/hehe-valuation-analysis/)。两项都能独立使用；共同研究时，各自交付完整报告，复用同一套适用模型。
+
+| 升级重点 | 现在怎样分析 | 你能得到什么 |
+|---|---|---|
+| **投资分析，先选对场景** | 保留行业机会、企业、项目、上市证券、具体交易五类入口；把未明确的投资方式与目的一次问清 | VC、并购、战略投资与二级市场问题，都按实际需求展开 |
+| **投资逻辑：判断是否值得参与** | 检验经营假设、预期差、进入条件、反方与退出；有数据时计算本金倍数、年化回报和价格临界值 | 不只解释增长前景，还能看懂钱靠什么赚、怎样亏、何时重估判断 |
+| **估值分析：说明价值如何形成** | 从销量、单价、客户等驱动推导收入和利润，衔接再投资、营运资金、融资、分配和股数 | 一套能修改、能复算、能解释价值变化的模型 |
+| **一套模型，两份报告** | 统一时点、币种、情景、现金与稀释；估值报告负责参数和价值，投资报告负责回报与选择 | 两份报告的假设与数字能够相互核对 |
+| **价格与回报分开反推** | 分开回答“现价要求怎样的经营表现”与“达到指定回报最多能付多少” | 避免把价值差额直接当成可实现收益 |
+
+此外，非上市企业的 IPO 价值桥已修正现金与净债务可能重复计入的问题；有增长就检查相应资本投入，有融资就检查投资者出资、权利和稀释。完整投资逻辑仍按八部分展开，完整估值仍按十三节展开。
+
+**本轮验证：小鹏汽车双专项联合研究。** 完成两份独立 Markdown 报告和一个共享公式 Excel；36 项原生 Excel 检查通过，429 条公式未发现错误，并完成保存后重开回读。该案例验证了上市证券路径的分工、资金衔接和模型一致性。
+
+<details>
+<summary><strong>试试这样提问：让估值和投资判断一起工作</strong></summary>
+
+```text
+使用 $hehe-investment-logic 和 $hehe-valuation-analysis，
+研究一家公司的投资价值。先把投资场景、进入方式和目的问清楚。
+两份报告共用经营、资金和股数假设：
+估值报告解释价值计算，投资逻辑报告解释回报、风险与进入退出条件。
+```
+
+如果只想判断投资逻辑，直接调用投资专项即可；如果只想计算价值，直接调用估值专项即可。
+
+</details>
+
+**已安装用户：** 更新 `skills/hehe-investment-logic/` 与 `skills/hehe-valuation-analysis/` 两个完整文件夹，包含 `references/` 和调用配置，然后新开会话。使用 Git 安装的用户可在仓库执行 `git pull --ff-only` 后重新复制这两个目录。
 
 ### 2026-09-28：竞争格局分析增加定位图与能力矩阵
 
