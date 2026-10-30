@@ -5,13 +5,63 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-16-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.10.25-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.10.30-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
 “盒盒”是这套原创研究方法的识别前缀，因此公开版本统一使用 `hehe-*` 名称。每个专项都能独立调用；完整研究则由总入口负责开题、搜索组织、材料审核、专项验收和最终整合。
 
 ## Skill 更新说明
+
+<a id="release-20261030"></a>
+
+### 🔎 2026.10.30｜从资料有出处，到报告经得起核对
+
+> **一条主张，核对它的证据；一个数字，核对它的计算；一份定稿，核对所有交付版本。**
+
+本轮将资料审核与成稿核对统一接入独立的 **[`baojie`（保洁）](https://github.com/hexiaofeier/baojie)**。保洁原有的登记、去重、证据分级和矛盾补证继续保留，新增报告、图表、测算表及 HTML／PDF／PPT 的交付检查。旧的独立交付质检入口退出，由保洁承接这些职责。
+
+| 核对发生在何处 | 具体检查内容 | 检查后怎样处理 |
+|---|---|---|
+| **材料进入分析前** | 原文、对象、时期、定义、分母、同源转载与矛盾 | 形成证据台账，说明每条材料实际能支持什么 |
+| **Markdown 成稿后** | 事实与来源是否对应，计算是否正确，推理能否推出结论 | 给出具体问题、依据与更正建议，返回受影响的分析或编辑环节 |
+| **视觉文件与附件形成后** | 正文、Excel、图表、HTML、PDF、PPT 的数字与口径是否一致，页面是否完整可读 | 修订后回看实际文件及关联内容，给出“可交付／修改后交付／退回分析”的判断 |
+
+证据等级判断的是**具体主张得到多少支持**：官方身份不自动代表强证据，未找到原文也不等于材料造假。企业自述、案例与有依据的情景参数，按实际用途保留；复合主张拆开核对，历史数据按研究时期使用。
+
+```mermaid
+flowchart LR
+    A["公开资料<br/>原文 · 定义 · 时间"] --> B["保洁：材料审核<br/>去重 · 分级 · 矛盾补证"]
+    B --> C["研究与报告制作<br/>专项分析 · 专业编辑 · 视觉呈现"]
+    C --> D["保洁：成稿核对<br/>事实 · 计算 · 推理 · 各文件对应"]
+    D --> E["修订并复查<br/>核对实际交付文件"]
+    classDef material fill:#eaf3f6,color:#173f53,stroke:#8db2c2;
+    classDef checking fill:#173f53,color:#fff,stroke:#173f53;
+    classDef delivery fill:#e8f5f1,color:#173f53,stroke:#279a8d;
+    class A,C material;
+    class B,D checking;
+    class E delivery;
+```
+
+**安装关系保持简单：** 本组合仍为 **1 个总入口＋13 个研究专项＋2 个报告交付 Skill，共 16 项**。保洁单独发布，名称仍为 `baojie`，不随本组合打包。已安装时调用保洁；未安装时由当前研究 Agent 按包内规则自行完成对应检查。Markdown 可先核对，新增或修改的视觉报告与附件再补查受影响内容。
+
+**已有报告也能直接检查：**
+
+```text
+使用已安装的 $baojie 核对这份报告及配套 Excel、HTML 和 PDF。
+检查关键结论的原始出处，独立复算重要数字，比较各文件的数值和口径。
+按具体位置列出问题、依据和修订建议；修改后复查实际交付文件。
+```
+
+**已安装用户：** 更新组合包的 `hehe-industry-researcher` 完整目录；需要独立保洁能力时，另行安装或更新 `baojie`，然后新开会话。13 个研究专项及两个报告 Skill 的既有分析、写作与呈现能力保持。
+
+<p align="center">
+  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.10.30"><strong>📦 下载当前组合包</strong></a>
+  &nbsp; · &nbsp;
+  <a href="https://github.com/hexiaofeier/baojie"><strong>🔎 查看保洁独立版</strong></a>
+</p>
+
+---
 
 <a id="release-20261025"></a>
 
@@ -23,7 +73,7 @@
 本轮新增 **`hehe-report-writing`（专业报告写作与润色）** 和 **`hehe-report-presentation`（商业报告呈现）**。从行业、企业或单项研究出发，可以继续完成文字编辑、逐页编排和视觉制作，交付适合阅读、汇报、打印与后续修改的专业报告。
 
 <p align="center">
-  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.10.25"><strong>📦 下载新版组合包</strong></a>
+  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.10.30"><strong>📦 下载当前组合包</strong></a>
   &nbsp; · &nbsp;
   <a href="https://github.com/hexiaofeier/hehe-report-writing"><strong>✍️ 写作独立版</strong></a>
   &nbsp; · &nbsp;
@@ -305,7 +355,7 @@ PPTX由本Skill的分页HTML生成，交付时保留HTML阅读版；独立插图
 |---|---|---|
 | `sou-cha-ling`（搜查令） | 把问题设计成关键词簇、平台和带回字段 | [hexiaofeier/sou-cha-ling](https://github.com/hexiaofeier/sou-cha-ling) |
 | `tanzi`（探子） | 跨平台采集公开信息并保留正文状态 | [hexiaofeier/tanzi](https://github.com/hexiaofeier/tanzi) |
-| `baojie`（保洁） | 去重、分级、矛盾复核并交付证据台账 | [hexiaofeier/baojie](https://github.com/hexiaofeier/baojie) |
+| `baojie`（保洁） | 资料去重分级与矛盾补证；成稿事实、计算、引用、推理及跨文件核对，修订后复查 | [hexiaofeier/baojie](https://github.com/hexiaofeier/baojie) |
 
 没有这些 Skill 时，当前 Agent 按包内后备规则完成必要的搜索和材料检查。
 

@@ -3,7 +3,7 @@
   "profile": "research-bundle",
   "display_name": "盒盒行业研究技能包",
   "repository_slug": "hehe-industry-research-skill-pack",
-  "version": "2026.10.25",
+  "version": "2026.10.30",
   "namespace": "hehe-",
   "entry_skill": "hehe-industry-researcher",
   "skills": [
@@ -245,9 +245,7 @@
     "sou-cha-ling",
     "baojie"
   ],
-  "optional_external_skills": {
-    "hehe-research-delivery-qc": "仅在本机已安装时用于交付检查；未安装时由总入口自检，不要求公开用户安装。"
-  },
+  "optional_external_skills": {},
   "source_skill_sha256": {
     "hehe-industry-researcher": "f4c3300dc8a231c424897c766b35471f5594a00effc3ea1b61f185e4fa960c7d",
     "hehe-market-sizing": "2ef339d0dc1d8bf2ede5cc65611c19178e17c664ae00bff377ca2048200473e8",
