@@ -1,0 +1,99 @@
+{
+  "title": "图表规划与制作教学示例",
+  "footer": "全部数据与地域边界均为教学假设",
+  "canvas": "16:9",
+  "theme": "blue",
+  "extra_css": ".chart-example-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:36px;align-items:start}\n.chart-example-grid figure{margin:0;min-width:0}.chart-example-grid svg{display:block;width:100%;height:325px}\n.chart-example-grid figcaption{font-size:12px;line-height:1.65;color:var(--muted);margin-top:12px}\nbody[data-canvas=\"9:16\"] .chart-example-grid,body[data-canvas=\"A4\"] .chart-example-grid{grid-template-columns:1fr;gap:22px}\nbody[data-canvas=\"9:16\"] .chart-example-grid svg,body[data-canvas=\"A4\"] .chart-example-grid svg{height:300px}\n@media screen and (max-width:850px){body[data-canvas=\"scroll\"] .chart-example-grid{grid-template-columns:1fr}}\n",
+  "slides": [
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "服务企业收入与毛利率比较",
+      "lead": "八家模拟企业中，收入较高的企业并非全部具有更高毛利率。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"scatter\" data-visual=\"scatter\" data-source=\"模拟教学表\" data-x-unit=\"万元\" data-y-unit=\"%\" data-x-min=\"0\" data-x-max=\"800\" data-y-min=\"0\" data-y-max=\"50\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"scatter模拟数据图\"><line x1=\"55\" y1=\"205\" x2=\"335\" y2=\"205\" stroke=\"#173f58\" data-axis=\"x\"/><line x1=\"55\" y1=\"205\" x2=\"55\" y2=\"35\" stroke=\"#173f58\" data-axis=\"y\"/><text x=\"55.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">0</text><text x=\"125.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">200</text><text x=\"195.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">400</text><text x=\"265.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">600</text><text x=\"335.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">800</text><text x=\"46\" y=\"209.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">0</text><text x=\"46\" y=\"175.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">10</text><text x=\"46\" y=\"141.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">20</text><text x=\"46\" y=\"107.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">30</text><text x=\"46\" y=\"73.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">40</text><text x=\"46\" y=\"39.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">50</text><text x=\"235\" y=\"247\" fill=\"#173f58\" font-size=\"12\" >收入（万元）</text><text x=\"55\" y=\"20\" fill=\"#173f58\" font-size=\"12\" >毛利率（%）</text><circle data-point=\"A\" data-x=\"200\" data-y=\"20\" cx=\"125.0\" cy=\"137.0\" r=\"4\" fill=\"#238b92\"/><text x=\"132.0\" y=\"131.0\" fill=\"#173f58\" font-size=\"12\" >A</text><circle data-point=\"B\" data-x=\"240\" data-y=\"32\" cx=\"139.0\" cy=\"96.2\" r=\"4\" fill=\"#238b92\"/><text x=\"146.0\" y=\"90.2\" fill=\"#173f58\" font-size=\"12\" >B</text><circle data-point=\"C\" data-x=\"300\" data-y=\"24\" cx=\"160.0\" cy=\"123.4\" r=\"4\" fill=\"#238b92\"/><text x=\"167.0\" y=\"117.4\" fill=\"#173f58\" font-size=\"12\" >C</text><circle data-point=\"D\" data-x=\"400\" data-y=\"18\" cx=\"195.0\" cy=\"143.8\" r=\"4\" fill=\"#238b92\"/><text x=\"202.0\" y=\"137.8\" fill=\"#173f58\" font-size=\"12\" >D</text><circle data-point=\"E\" data-x=\"450\" data-y=\"38\" cx=\"212.5\" cy=\"75.80000000000001\" r=\"4\" fill=\"#238b92\"/><text x=\"219.5\" y=\"69.80000000000001\" fill=\"#173f58\" font-size=\"12\" >E</text><circle data-point=\"F\" data-x=\"550\" data-y=\"30\" cx=\"247.5\" cy=\"103.0\" r=\"4\" fill=\"#238b92\"/><text x=\"254.5\" y=\"97.0\" fill=\"#173f58\" font-size=\"12\" >F</text><circle data-point=\"G\" data-x=\"600\" data-y=\"42\" cx=\"265.0\" cy=\"62.19999999999999\" r=\"4\" fill=\"#238b92\"/><text x=\"272.0\" y=\"56.19999999999999\" fill=\"#173f58\" font-size=\"12\" >G</text><circle data-point=\"H\" data-x=\"700\" data-y=\"28\" cx=\"300.0\" cy=\"109.8\" r=\"4\" fill=\"#238b92\"/><text x=\"307.0\" y=\"103.8\" fill=\"#173f58\" font-size=\"12\" >H</text></svg><figcaption>2026年中国8家模拟服务企业；收入：万元；毛利率：%；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>企业G的收入为600万元、毛利率42%；收入更高的企业H为700万元、毛利率28%。收入规模和毛利率应同时观察，单按收入排序会忽略盈利结构的差异。</p><p>后续比较应沿用同一成本口径，并结合服务组合和客户结构，解释企业G相对企业H的毛利率优势来自哪些业务条件。</p></div></div>",
+      "layout": "scatter",
+      "visual_plan": {
+        "relation": "correlation",
+        "form": "scatter",
+        "target": "scatter",
+        "message": "八家模拟企业中，收入较高的企业并非全部具有更高毛利率。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "服务企业的规模与毛利率定位",
+      "lead": "按收入400万元和毛利率30%的教学分界，企业E与G同时处于较高收入、较高毛利率区域。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"quadrant\" data-visual=\"quadrant\" data-source=\"模拟教学表\" data-x-unit=\"万元\" data-y-unit=\"%\" data-x-min=\"0\" data-x-max=\"800\" data-y-min=\"0\" data-y-max=\"50\" data-x-threshold=\"400\" data-y-threshold=\"30\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"quadrant模拟数据图\"><line x1=\"55\" y1=\"205\" x2=\"335\" y2=\"205\" stroke=\"#173f58\" data-axis=\"x\"/><line x1=\"55\" y1=\"205\" x2=\"55\" y2=\"35\" stroke=\"#173f58\" data-axis=\"y\"/><text x=\"55.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">0</text><text x=\"125.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">200</text><text x=\"195.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">400</text><text x=\"265.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">600</text><text x=\"335.0\" y=\"224\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">800</text><text x=\"46\" y=\"209.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">0</text><text x=\"46\" y=\"175.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">10</text><text x=\"46\" y=\"141.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">20</text><text x=\"46\" y=\"107.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">30</text><text x=\"46\" y=\"73.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">40</text><text x=\"46\" y=\"39.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">50</text><text x=\"235\" y=\"247\" fill=\"#173f58\" font-size=\"12\" >收入（万元）</text><text x=\"55\" y=\"20\" fill=\"#173f58\" font-size=\"12\" >毛利率（%）</text><line x1=\"195\" y1=\"205\" x2=\"195\" y2=\"35\" stroke=\"#558eaa\" data-divider=\"x\" stroke-dasharray=\"4 3\"/><line x1=\"55\" y1=\"103\" x2=\"335\" y2=\"103\" stroke=\"#558eaa\" data-divider=\"y\" stroke-dasharray=\"4 3\"/><circle data-point=\"A\" data-x=\"200\" data-y=\"20\" cx=\"125.0\" cy=\"137.0\" r=\"4\" fill=\"#238b92\"/><text x=\"132.0\" y=\"131.0\" fill=\"#173f58\" font-size=\"12\" >A</text><circle data-point=\"B\" data-x=\"240\" data-y=\"32\" cx=\"139.0\" cy=\"96.2\" r=\"4\" fill=\"#238b92\"/><text x=\"146.0\" y=\"90.2\" fill=\"#173f58\" font-size=\"12\" >B</text><circle data-point=\"C\" data-x=\"300\" data-y=\"24\" cx=\"160.0\" cy=\"123.4\" r=\"4\" fill=\"#238b92\"/><text x=\"167.0\" y=\"117.4\" fill=\"#173f58\" font-size=\"12\" >C</text><circle data-point=\"D\" data-x=\"400\" data-y=\"18\" cx=\"195.0\" cy=\"143.8\" r=\"4\" fill=\"#238b92\"/><text x=\"202.0\" y=\"137.8\" fill=\"#173f58\" font-size=\"12\" >D</text><circle data-point=\"E\" data-x=\"450\" data-y=\"38\" cx=\"212.5\" cy=\"75.80000000000001\" r=\"4\" fill=\"#238b92\"/><text x=\"219.5\" y=\"69.80000000000001\" fill=\"#173f58\" font-size=\"12\" >E</text><circle data-point=\"F\" data-x=\"550\" data-y=\"30\" cx=\"247.5\" cy=\"103.0\" r=\"4\" fill=\"#238b92\"/><text x=\"254.5\" y=\"97.0\" fill=\"#173f58\" font-size=\"12\" >F</text><circle data-point=\"G\" data-x=\"600\" data-y=\"42\" cx=\"265.0\" cy=\"62.19999999999999\" r=\"4\" fill=\"#238b92\"/><text x=\"272.0\" y=\"56.19999999999999\" fill=\"#173f58\" font-size=\"12\" >G</text><circle data-point=\"H\" data-x=\"700\" data-y=\"28\" cx=\"300.0\" cy=\"109.8\" r=\"4\" fill=\"#238b92\"/><text x=\"307.0\" y=\"103.8\" fill=\"#173f58\" font-size=\"12\" >H</text></svg><figcaption>2026年中国8家模拟服务企业；收入：万元；毛利率：%；教学分界400万元/30%；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>四象限沿用同一组收入和毛利率数据，便于同时识别两项指标较高、单项较高或均较低的案例。企业E与G位于右上区域；等于阈值的D与F保留在分界线上。后续可以比较各案例的业务结构及成本构成。</p><p>分界改变会影响归类，因此本图明确列出阈值。实际研究应按业务目标或有依据的比较标准确定分界，并保留原始数值。</p></div></div>",
+      "layout": "quadrant",
+      "visual_plan": {
+        "relation": "positioning",
+        "form": "quadrant",
+        "target": "quadrant",
+        "message": "按收入400万元和毛利率30%的教学分界，企业E与G同时处于较高收入、较高毛利率区域。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "模拟区域付费客户数分布",
+      "lead": "乙区客户数为甲区的三倍；区域绝对数量不能直接说明当地市场渗透率。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"choropleth\" data-visual=\"choropleth\" data-source=\"模拟教学表\" data-unit=\"家\" data-map-source=\"教学示意边界\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"choropleth模拟数据图\"><polygon data-region=\"甲区\" data-value=\"40\" points=\"60,45 195,55 170,195 55,175\" fill=\"#dcebef\" stroke=\"white\" stroke-width=\"3\"/><path data-region=\"乙区\" data-value=\"120\" d=\"M195 55 L330 40 L340 190 L170 195 Z\" fill=\"#238b92\" stroke=\"white\" stroke-width=\"3\"/><text x=\"87\" y=\"115\" fill=\"#173f58\" font-size=\"12\" >甲区：40家</text><text x=\"226\" y=\"115\" fill=\"white\" font-size=\"12\" >乙区：120家</text></svg><figcaption>2026年模拟区域甲40家、乙120家；单位：家；底图：教学示意边界（虚构区域）；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>甲区40家、乙区120家，区域填色用于区分绝对客户数量。如果乙区本身企业数量更多，客户数较高也可能来自市场基础更大。</p><p>比较市场渗透率时，应将各区付费客户数除以符合服务条件的企业总数，并统一统计时点，以区分客户积累与市场覆盖程度。</p></div></div>",
+      "layout": "choropleth",
+      "visual_plan": {
+        "relation": "geography",
+        "form": "choropleth",
+        "target": "choropleth",
+        "message": "乙区客户数为甲区的三倍；区域绝对数量不能直接说明当地市场渗透率。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "模拟地点付费客户数比较",
+      "lead": "乙地点客户数为甲地点的三倍，气泡面积按客户数成比例绘制。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"bubble_map\" data-visual=\"bubble_map\" data-source=\"模拟教学表\" data-unit=\"家\" data-map-source=\"教学示意边界\" data-projection=\"equirectangular\" data-lon-min=\"0\" data-lon-max=\"10\" data-lat-min=\"0\" data-lat-max=\"10\" data-map-box=\"55 45 280 150\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"bubble_map模拟数据图\"><polygon data-region=\"甲区\" data-value=\"40\" points=\"60,45 195,55 170,195 55,175\" fill=\"#dcebef\" stroke=\"white\" stroke-width=\"3\"/><path data-region=\"乙区\" data-value=\"120\" d=\"M195 55 L330 40 L340 190 L170 195 Z\" fill=\"#dcebef\" stroke=\"white\" stroke-width=\"3\"/><circle data-point=\"甲\" data-lon=\"2.5\" data-lat=\"5\" data-value=\"40\" cx=\"125.0\" cy=\"120.0\" r=\"12.649110640673518\" fill=\"#173f58\" stroke=\"white\"/><text x=\"111.0\" y=\"159.0\" fill=\"#173f58\" font-size=\"12\" >甲：40</text><circle data-point=\"乙\" data-lon=\"7.5\" data-lat=\"5\" data-value=\"120\" cx=\"265.0\" cy=\"120.0\" r=\"21.908902300206645\" fill=\"#173f58\" stroke=\"white\"/><text x=\"251.0\" y=\"159.0\" fill=\"#173f58\" font-size=\"12\" >乙：120</text></svg><figcaption>2026年模拟地点甲40家、乙120家；单位：家；底图：教学示意边界（虚构区域）；坐标为教学设定；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>气泡中心表示地点，面积表示客户数；乙地点120家对应的气泡面积为甲地点40家的三倍。半径按数值的平方根换算，避免把数量差夸大。</p><p>地域数量图适合识别客户集中的地点。结合设备数量、工程师分布和到场时间，可以继续检查维护网点的覆盖安排。</p></div></div>",
+      "layout": "bubble_map",
+      "visual_plan": {
+        "relation": "geography",
+        "form": "bubble_map",
+        "target": "bubble_map",
+        "message": "乙地点客户数为甲地点的三倍，气泡面积按客户数成比例绘制。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "模拟服务企业的收入构成",
+      "lead": "项目收入占75%，本例企业的收入主要来自项目业务。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"donut\" data-visual=\"donut\" data-source=\"模拟教学表\" data-total=\"100\" data-unit=\"%\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"donut模拟数据图\"><circle data-category=\"订阅\" data-value=\"25\" cx=\"185\" cy=\"125\" r=\"72\" fill=\"none\" stroke=\"#558eaa\" stroke-width=\"28\" stroke-dasharray=\"113.09733552923255 339.2920065876977\" stroke-dashoffset=\"-0.0\"/><circle data-category=\"项目\" data-value=\"75\" cx=\"185\" cy=\"125\" r=\"72\" fill=\"none\" stroke=\"#238b92\" stroke-width=\"28\" stroke-dasharray=\"339.2920065876977 113.09733552923255\" stroke-dashoffset=\"-113.09733552923255\"/><text x=\"158\" y=\"124\" fill=\"#173f58\" font-size=\"12\" >100万元</text><rect x=\"90\" y=\"218\" width=\"10\" height=\"10\" fill=\"#558eaa\"/><text x=\"106\" y=\"229\" fill=\"#173f58\" font-size=\"12\" >订阅25%</text><rect x=\"210\" y=\"218\" width=\"10\" height=\"10\" fill=\"#238b92\"/><text x=\"226\" y=\"229\" fill=\"#173f58\" font-size=\"12\" >项目75%</text></svg><figcaption>2026年模拟企业收入100万元，其中订阅25万元、项目75万元；比例单位：%；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>环形图展示同一个整体内部的构成。订阅收入25万元、项目收入75万元，共计100万元；分类口径互斥且完整，因此可用占比表达。</p><p>项目收入占比较高，后续经营分析应重点核对项目签约、确认收入与交付资源，并分别核算订阅和项目业务的成本及利润。</p></div></div>",
+      "layout": "donut",
+      "visual_plan": {
+        "relation": "composition",
+        "form": "donut",
+        "target": "donut",
+        "message": "项目收入占75%，本例企业的收入主要来自项目业务。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "图表规划与制作｜公开模拟示例",
+      "title": "模拟服务企业收入及同比增速",
+      "lead": "模拟企业收入从40亿元增至80亿元，同比增速从60%升至100%，两项指标分别使用独立刻度。",
+      "body": "<div class=\"chart-example-grid\"><figure id=\"dual_axis\" data-visual=\"dual_axis\" data-source=\"模拟教学表\" data-left-unit=\"亿元\" data-right-unit=\"%\" data-left-series=\"收入\" data-right-series=\"增速\" data-left-min=\"0\" data-left-max=\"100\" data-right-min=\"0\" data-right-max=\"120\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 380 255\" role=\"img\" aria-label=\"dual_axis模拟数据图\"><line x1=\"55\" y1=\"205\" x2=\"335\" y2=\"205\" stroke=\"#173f58\" data-axis=\"x\"/><line x1=\"55\" y1=\"205\" x2=\"55\" y2=\"35\" stroke=\"#173f58\" data-axis=\"left\"/><line x1=\"335\" y1=\"205\" x2=\"335\" y2=\"35\" stroke=\"#173f58\" data-axis=\"right\"/><text x=\"46\" y=\"209.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">0</text><text x=\"46\" y=\"124.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">50</text><text x=\"46\" y=\"39.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"end\">100</text><text x=\"344\" y=\"209.0\" fill=\"#173f58\" font-size=\"12\" >0</text><text x=\"344\" y=\"124.0\" fill=\"#173f58\" font-size=\"12\" >60</text><text x=\"344\" y=\"39.0\" fill=\"#173f58\" font-size=\"12\" >120</text><rect data-series=\"收入\" data-category=\"第1年\" data-value=\"40\" x=\"101\" y=\"137.0\" width=\"48\" height=\"68.0\" fill=\"#dcebef\"/><circle data-series=\"增速\" data-category=\"第1年\" data-value=\"60\" cx=\"125\" cy=\"120.0\" r=\"4\" fill=\"#238b92\"/><text x=\"125\" y=\"157.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">40</text><text x=\"133\" y=\"112.0\" fill=\"#173f58\" font-size=\"12\" >60%</text><text x=\"125\" y=\"225\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">第1年</text><rect data-series=\"收入\" data-category=\"第2年\" data-value=\"80\" x=\"241\" y=\"69.0\" width=\"48\" height=\"136.0\" fill=\"#dcebef\"/><circle data-series=\"增速\" data-category=\"第2年\" data-value=\"100\" cx=\"265\" cy=\"63.33333333333334\" r=\"4\" fill=\"#238b92\"/><text x=\"265\" y=\"89.0\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">80</text><text x=\"273\" y=\"55.33333333333334\" fill=\"#173f58\" font-size=\"12\" >100%</text><text x=\"265\" y=\"225\" fill=\"#173f58\" font-size=\"12\" text-anchor=\"middle\">第2年</text><polyline data-series=\"增速\" points=\"125,120.0 265,63.33333333333334\" fill=\"none\" stroke=\"#238b92\" stroke-width=\"2\"/><text x=\"55\" y=\"20\" fill=\"#173f58\" font-size=\"12\" >收入（亿元）</text><text x=\"260\" y=\"20\" fill=\"#173f58\" font-size=\"12\" >增速（%）</text></svg><figcaption>第0—2年收入依次为25、40、80亿元；同比增速60%、100%；来源：模拟教学表。</figcaption></figure><div><h2>图中差异及其含义</h2><p>柱形使用左侧亿元刻度，折线使用右侧百分比刻度。将收入与同比增速放在同一时间轴，可以同时观察企业规模和扩张速度。</p><p>从年度增量看，第1年增加15亿元，第2年增加40亿元。收入增量扩大，后续可结合客户数量、收费和业务组合分析增长来源。</p></div></div>",
+      "layout": "dual_axis",
+      "visual_plan": {
+        "relation": "trend",
+        "form": "dual_axis",
+        "target": "dual_axis",
+        "message": "模拟企业收入从40亿元增至80亿元，同比增速从60%升至100%，两项指标分别使用独立刻度。",
+        "explanation": "图旁正文保留完整解释，图下注明单位和模拟来源。"
+      }
+    }
+  ]
+}

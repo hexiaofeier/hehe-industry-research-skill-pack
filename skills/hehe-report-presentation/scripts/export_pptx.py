@@ -1,7 +1,7 @@
 """Convert supported report HTML to native editable PowerPoint objects.
 
 Text, rectangles, lines, tables and data-chart figures become native objects.
-SVG illustrations remain individual images, listed in the conversion manifest.
+SVG illustrations and ordinary images remain individual pictures in the manifest.
 """
 import argparse,io,json,re
 from pathlib import Path
@@ -11,12 +11,13 @@ from pptx.util import Inches,Pt
 from pptx.dml.color import RGBColor
 from pptx.enum.shapes import MSO_SHAPE,MSO_SHAPE_TYPE
 from pptx.enum.text import MSO_AUTO_SIZE,PP_ALIGN,MSO_ANCHOR
-from pptx.enum.chart import XL_CHART_TYPE,XL_LEGEND_POSITION,XL_LABEL_POSITION
+from pptx.enum.chart import XL_CHART_TYPE,XL_LEGEND_POSITION,XL_LABEL_POSITION,XL_TICK_LABEL_POSITION
 from pptx.chart.data import CategoryChartData
 from pptx.oxml.xmlchemy import OxmlElement
 from pptx.oxml.ns import qn
 from pptx.opc.constants import RELATIONSHIP_TYPE as RT
 from lxml import etree
+from export_analytical import add_analytical_chart, TYPES as ANALYTICAL_TYPES
 
 # Pseudo-elements carry chapter panels and connector arrows in the report CSS.
 # Materialize their computed appearance so the same native-object extractor sees them.
@@ -87,6 +88,55 @@ for(const [el,nodes] of blocks){
 }
 return {w:s.offsetWidth,h:s.offsetHeight,bg:getComputedStyle(s).backgroundColor,shapes,tables,charts,texts};}'''
 
+# Hide unrelated paint without detaching the SVG or changing layout. Keeping the
+# original DOM preserves inherited fonts/styles, ancestor opacity and overflow.
+# The returned closure restores even an absent (rather than empty) style attribute.
+ISOLATE_SVG=r'''svg=>{
+const nodes=[svg,...svg.querySelectorAll('*')];
+const visibility=nodes.map(e=>getComputedStyle(e).visibility);
+const saved=[...document.querySelectorAll('*')].map(e=>[e,e.getAttribute('style')]);
+const pseudo=document.createElement('style');
+pseudo.textContent='*::before,*::after{visibility:hidden!important}';
+document.head.append(pseudo);
+for(const [e] of saved)e.style.setProperty('visibility','hidden','important');
+for(let i=0;i<nodes.length;i++)nodes[i].style.setProperty('visibility',visibility[i],'important');
+for(const e of [document.documentElement,document.body])e.style.setProperty('background','transparent','important');
+return ()=>{
+ for(const [e,style] of saved){
+  // Flush pending CSSOM attribute writes before restoring an absent attribute.
+  e.getAttribute('style');style===null?e.removeAttribute('style'):e.setAttribute('style',style);
+ }
+ pseudo.remove();
+};}'''
+
+def rasterize_svg(page,element,clip):
+    restore=element.evaluate_handle(ISOLATE_SVG)
+    try:
+        return page.screenshot(clip=clip,omit_background=True)
+    finally:
+        restore.evaluate('restore=>restore()');restore.dispose()
+
+def wait_for_images(page,page_number):
+    failed=page.evaluate(r'''async()=>{
+const visible=e=>{
+ if(getComputedStyle(e).visibility!=='visible')return false;
+ for(let p=e;p;p=p.parentElement){const c=getComputedStyle(p);if(c.display==='none'||Number(c.opacity)===0)return false;}
+ return true;
+};
+const failed=[];
+await Promise.all([...document.querySelectorAll('.slide.active img')].filter(visible).map(async image=>{
+ image.loading='eager';
+ try{await image.decode();}catch{}
+ if(!image.complete||!image.naturalWidth||!image.naturalHeight){
+  const src=image.currentSrc||image.getAttribute('src')||'(空src)';
+  failed.push(image.alt|| (src.startsWith('data:')?'内嵌图片':src));
+ }
+}));
+return failed;
+}''')
+    if failed:
+        raise ValueError(f'第{page_number}页图片未成功加载：'+ '；'.join(failed))
+
 def color(v):
     if v.startswith('#'):return RGBColor.from_string(v.lstrip('#'))
     nums=re.findall(r'[\d.]+',v)
@@ -128,7 +178,9 @@ def finish_links(prs,html_file):
     theme._blob=etree.tostring(root,xml_declaration=True,encoding='UTF-8',standalone=True)
 
 def add_chart(slide,a):
-    spec=a['spec'];kind=spec['chart_type'];data=CategoryChartData();data.categories=spec['labels']
+    spec=a['spec'];kind=spec['chart_type']
+    if kind in ANALYTICAL_TYPES:return add_analytical_chart(slide,a)
+    data=CategoryChartData();data.categories=spec['labels']
     colors=['#27647f','#208e91','#b78647','#8ba6b2']
     if kind=='waterfall':
         values=spec['values'];totals=set(spec.get('totals',[0,len(values)-1]));current=0
@@ -150,11 +202,26 @@ def add_chart(slide,a):
     if kind!='hbar' or min(v for s in spec['series'] for v in s['values'])>=0:chart.value_axis.minimum_scale=0
     chart.value_axis.major_gridlines.format.line.color.rgb=color('#d8e2e7');chart.value_axis.major_gridlines.format.line.width=Pt(.5)
     chart.category_axis.format.line.color.rgb=color('#cfdee4');chart.value_axis.format.line.fill.background()
-    if kind=='hbar':chart.category_axis.reverse_order=True
-    if kind in {'bar','hbar'}:
-        plot=chart.plots[0];plot.has_data_labels=True;plot.data_labels.position=XL_LABEL_POSITION.OUTSIDE_END;plot.data_labels.font.size=Pt(11)
+    if kind=='hbar':
+        chart.category_axis.reverse_order=True
+        if min(v for s in spec['series'] for v in s['values'])<0:
+            chart.category_axis.tick_label_position=XL_TICK_LABEL_POSITION.LOW
+    if kind in {'bar','hbar','stacked'}:
+        plot=chart.plots[0];plot.has_data_labels=True;labels=plot.data_labels
+        labels.position=XL_LABEL_POSITION.CENTER if kind=='stacked' else XL_LABEL_POSITION.OUTSIDE_END
+        labels.font.size=Pt(11)
+        if kind=='stacked':
+            labels.show_value=True;labels.number_format=data.number_format;labels.number_format_is_linked=True
+            labels.font.name='Microsoft YaHei';labels.font.color.rgb=color('#ffffff')
     for j,ser in enumerate(chart.series):
-        fill=ser.format.fill;fill.solid();fill.fore_color.rgb=color(colors[j%4]);ser.format.line.fill.background()
+        series_color=color(colors[j%4]);fill=ser.format.fill;fill.solid();fill.fore_color.rgb=series_color
+        if kind=='line':
+            ser.format.line.color.rgb=series_color;ser.format.line.width=Pt(2.25)
+            ser.marker.format.fill.solid();ser.marker.format.fill.fore_color.rgb=series_color
+            ser.marker.format.line.color.rgb=series_color
+        else:ser.format.line.fill.background()
+        if kind in {'bar','hbar'}:
+            ser.invert_if_negative=False
         if kind=='waterfall':
             if j==0:ser.format.fill.background()
             else:
@@ -177,14 +244,14 @@ def add_chart(slide,a):
 def convert(html_file,output,browser_path,replace=False):
     output=Path(output).resolve();output.parent.mkdir(parents=True,exist_ok=True)
     if output.exists() and not replace:raise FileExistsError(output)
-    prs=Presentation();manifest={'source':str(Path(html_file).resolve()),'pages':[],'image_elements':[],'omitted_decorations':[],'text_wrapping':'browser line breaks retained in native paragraphs'}
+    prs=Presentation();manifest={'source':str(Path(html_file).resolve()),'pages':[],'image_elements':[],'analytical_charts':[],'omitted_decorations':[],'text_wrapping':'browser line breaks retained in native paragraphs'}
     with sync_playwright() as p:
         browser=p.chromium.launch(executable_path=browser_path,headless=True)
         page=browser.new_page(viewport={'width':1600,'height':1500});page.context.set_offline(True)
         page.goto(Path(html_file).resolve().as_uri());page.wait_for_function("document.documentElement.dataset.ready==='true'")
         if page.locator('body').get_attribute('data-canvas')=='scroll':raise ValueError('PPT需要分页源；先按主题编排下拉文稿')
         for n in range(page.locator('.slide').count()):
-            page.evaluate('(n)=>show(n)',n);page.evaluate(MATERIALIZE);d=page.evaluate(EXTRACT)
+            page.evaluate('(n)=>show(n)',n);wait_for_images(page,n+1);page.evaluate(MATERIALIZE);d=page.evaluate(EXTRACT)
             prs.slide_width=pos(d['w']);prs.slide_height=pos(d['h']);slide=prs.slides.add_slide(prs.slide_layouts[6]);slide.background.fill.solid();slide.background.fill.fore_color.rgb=color(d['bg'])
             for a in d['shapes']:
                 if a['w']<=0 and a['h']<=0:continue
@@ -222,7 +289,8 @@ def convert(html_file,output,browser_path,replace=False):
                             para.space_before=Pt(0);para.space_after=Pt(0);para.line_spacing=Pt(c['line']*.75)
                             para.alignment={'center':PP_ALIGN.CENTER,'right':PP_ALIGN.RIGHT}.get(c['align'],PP_ALIGN.LEFT)
             for a in d['charts']:
-                add_chart(slide,a)
+                result=add_chart(slide,a)
+                if isinstance(result,dict):manifest['analytical_charts'].append({'page':n+1,**result})
             for a in d['texts']:
                 if a['w']<1 or a['h']<1:continue
                 shape=slide.shapes.add_textbox(pos(a['x']),pos(a['y']-1),pos(a['w']+2),pos(a['h']+5));tf=shape.text_frame
@@ -234,24 +302,29 @@ def convert(html_file,output,browser_path,replace=False):
                     if spec.get('break'):para.add_line_break()
                     else:
                         run=para.add_run();run.text=spec['text'];font(run,spec)
-            svgs=page.locator('.slide.active svg:not(.native-chart svg)')
-            for i in range(svgs.count()):
-                el=svgs.nth(i)
-                if el.evaluate("e=>!!e.closest('.native-chart')"):continue
+            images=page.locator('.slide.active svg,.slide.active img')
+            for i in range(images.count()):
+                el=images.nth(i)
+                # A nested SVG/image is already painted by its outer SVG.
+                if el.evaluate("e=>!!e.closest('.native-chart')||!!e.parentElement.closest('svg')"):continue
+                if not el.is_visible():continue
+                element=el.evaluate("e=>e.tagName.toLowerCase()")
                 b=el.bounding_box();root=page.locator('.slide.active').bounding_box();sc=root['width']/d['w']
                 if b['width']<=0 or b['height']<=0:continue
                 x=max(b['x'],root['x']);y=max(b['y'],root['y'])
                 w=min(b['x']+b['width'],root['x']+root['width'])-x;h=min(b['y']+b['height'],root['y']+root['height'])-y
                 if w<=0 or h<=0:continue
-                # Keep the visible part of intentionally cropped cover artwork.
-                blob=page.screenshot(clip={'x':x,'y':y,'width':w,'height':h})
+                # Isolate image paint to retain CSS fit, clipping and opacity,
+                # while the surrounding title remains native editable text.
+                blob=rasterize_svg(page,el,{'x':x,'y':y,'width':w,'height':h})
                 picture=slide.shapes.add_picture(io.BytesIO(blob),pos((x-root['x'])/sc),pos((y-root['y'])/sc),pos(w/sc),pos(h/sc))
                 # Artwork may share space with a title; keep editable text above it.
                 tree=slide.shapes._spTree;tree.remove(picture._element)
                 first_text=next((i for i,e in enumerate(tree) if e.tag.endswith('}sp') and e.find('.//{http://schemas.openxmlformats.org/drawingml/2006/main}t') is not None),len(tree)-1)
                 tree.insert(first_text,picture._element)
-                manifest['image_elements'].append({'page':n+1,'element':'SVG插图','editable':'独立图片，可替换；图内路径不可逐点编辑'})
-            manifest['pages'].append({'page':n+1,'text_boxes':len(d['texts']),'tables':len(d['tables']),'charts':len(d['charts']),'shapes':sum(x.shape_type==MSO_SHAPE_TYPE.AUTO_SHAPE for x in slide.shapes)})
+                manifest['image_elements'].append({'page':n+1,'element':'SVG插图' if element=='svg' else 'HTML图片','editable':'独立图片，可移动替换；图内内容不可逐点编辑'})
+            analytical=[item for item in manifest['analytical_charts'] if item['page']==n+1]
+            manifest['pages'].append({'page':n+1,'text_boxes':len(d['texts']),'tables':len(d['tables']),'charts':len(d['charts']),'shapes':sum(x.shape_type==MSO_SHAPE_TYPE.AUTO_SHAPE for x in slide.shapes),'native_data_charts':sum(x.has_chart for x in slide.shapes),'analytical_shape_charts':sum(item['editable']=='shape_editable' for item in analytical),'analytical_text_boxes':sum(item['native_texts'] for item in analytical)})
         browser.close()
     finish_links(prs,html_file)
     prs.save(output)

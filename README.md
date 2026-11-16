@@ -5,13 +5,57 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-244C66.svg)](LICENSE)
 [![Agent Skills](https://img.shields.io/badge/Agent%20Skills-compatible-82B29B.svg)](https://agentskills.io/)
 [![Skills](https://img.shields.io/badge/Skills-16-B73F42.svg)](#包含的-skill)
-[![Release](https://img.shields.io/badge/release-2026.10.30-C98B5B.svg)](release-manifest.json)
+[![Release](https://img.shields.io/badge/release-2026.11.16-C98B5B.svg)](release-manifest.json)
 
 **Hehe Industry Research Skill Pack** 面向使用公开信息开展行业研究、企业研究、商业尽调和投资研究的 AI Agent。它由 `hehe-industry-researcher` 管理项目，再按任务调用市场规模、产业链、商业模式、竞争格局、财务、估值等 13 个专项 Skill。
 
 “盒盒”是这套原创研究方法的识别前缀，因此公开版本统一使用 `hehe-*` 名称。每个专项都能独立调用；完整研究则由总入口负责开题、搜索组织、材料审核、专项验收和最终整合。
 
 ## Skill 更新说明
+
+<a id="release-20261116"></a>
+
+### ✨ 2026.11.16｜从选图方案，到完整商业报告
+
+> **先想清楚用什么图表达，再把完整分析做成报告。**
+
+这次大更新将图表规划完整并入 `hehe-report-presentation`：既可以只为整份报告、章节、单页或一组数据设计图表方案，也可以继续制作HTML、PDF与可编辑PPT。研究框架、已有文稿、数据表和部分素材，都能作为起点。
+
+#### 新增10种分析图式，配合共同尺度的小多图
+
+| 报告需要讲清的内容 | 新增表达方式 |
+|---|---|
+| 两组水平相差多少、两个时点怎样变化 | 哑铃图、斜率图 |
+| 不同人群的需求与评价如何分布 | 热力矩阵、Likert态度结构图 |
+| 价格、支出、处理时长集中在哪里 | 直方图、箱线图、累计分布图 |
+| 估计范围多宽、预测情景怎样变化 | 点区间图、区间带 |
+| 哪些参数最影响利润或估值 | 龙卷风敏感性图 |
+| 多个地区、人群或品类怎样公平比较 | 使用共同尺度的小多图 |
+
+<table>
+<tr><td width="50%"><strong>两组水平与差距 · 哑铃图</strong><br><img src="docs/report-presentation/preview-dumbbell.png" alt="教学模拟：两期续约率及差距"></td><td width="50%"><strong>人群与需求差异 · 热力矩阵</strong><br><img src="docs/report-presentation/preview-heatmap.png" alt="教学模拟：不同客群对服务属性的评价"></td></tr>
+<tr><td width="50%"><strong>经营参数影响 · 敏感性图</strong><br><img src="docs/report-presentation/preview-tornado.png" alt="教学模拟：参数变化对利润的影响"></td><td width="50%"><strong>公平比较多个地区 · 小多图</strong><br><img src="docs/report-presentation/preview-multiples.png" alt="教学模拟：共同尺度的区域比较"></td></tr>
+</table>
+
+*以上均为随包教学模拟数据。可打开[17页HTML示例册](docs/report-presentation/analytical-gallery.html)、[PDF](docs/report-presentation/analytical-gallery.pdf)或[可编辑PPTX](docs/report-presentation/analytical-gallery.pptx)查看完整页面。*
+
+#### 图形解释关系，正文保留完整分析
+
+图表方案同时交代页面作用、主要判断、选图理由、完整解释的位置、需要的数据和备选方案。制作时先做真实内容的代表页，再展开整稿；空间不足先调整布局，再按完整主题拆页，保留必要主语、因果、条件、口径与来源。
+
+原有的产业链、付款与交付、条件分支、泳道、甘特、旅程、计算关系及基础数量图继续保留。带侧栏下拉HTML、16:9、9:16、A4翻页HTML及相应PDF，可按阅读、汇报和打印场景选择。
+
+#### 图表、图片与实际交付一起检查
+
+本轮补强类别与数值对应、屏幕及打印图形、图片加载和PPT对象检查，修复折线、堆积标签、普通图片、嵌套SVG及负值横条的呈现问题。随包新增图表选型、经营关系、执行流程和17页分析图表教学示例，便于直接试用。
+
+**PPT按对象提供编辑能力：** 基础数量图、斜率图、累计分布图及等宽直方图带可编辑数据；哑铃、矩阵、区间及其他复杂分析图使用可编辑形状与文字，改数时需同步几何或从页面源重建；独立SVG插图可移动替换。详细范围见[可编辑PPT说明](skills/hehe-report-presentation/references/可编辑PPT交付.md)。
+
+**更新方法：** 替换完整 `hehe-report-presentation` 目录并新开会话。独立版和行研组合版从同一维护源导出，同名Skill只安装一份；只做规划无需安装制图或导出环境。
+
+[🎨 呈现Skill独立版](https://github.com/hexiaofeier/hehe-report-presentation) · [📦 下载新版组合包](https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.11.16)
+
+---
 
 <a id="release-20261030"></a>
 
@@ -56,7 +100,7 @@ flowchart LR
 **已安装用户：** 更新组合包的 `hehe-industry-researcher` 完整目录；需要独立保洁能力时，另行安装或更新 `baojie`，然后新开会话。13 个研究专项及两个报告 Skill 的既有分析、写作与呈现能力保持。
 
 <p align="center">
-  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.10.30"><strong>📦 下载当前组合包</strong></a>
+  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.11.16"><strong>📦 下载当前组合包</strong></a>
   &nbsp; · &nbsp;
   <a href="https://github.com/hexiaofeier/baojie"><strong>🔎 查看保洁独立版</strong></a>
 </p>
@@ -73,7 +117,7 @@ flowchart LR
 本轮新增 **`hehe-report-writing`（专业报告写作与润色）** 和 **`hehe-report-presentation`（商业报告呈现）**。从行业、企业或单项研究出发，可以继续完成文字编辑、逐页编排和视觉制作，交付适合阅读、汇报、打印与后续修改的专业报告。
 
 <p align="center">
-  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.10.30"><strong>📦 下载当前组合包</strong></a>
+  <a href="https://github.com/hexiaofeier/hehe-industry-research-skill-pack/releases/tag/v2026.11.16"><strong>📦 下载当前组合包</strong></a>
   &nbsp; · &nbsp;
   <a href="https://github.com/hexiaofeier/hehe-report-writing"><strong>✍️ 写作独立版</strong></a>
   &nbsp; · &nbsp;

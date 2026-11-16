@@ -1,13 +1,71 @@
 """Render an explicitly planned report. Pagination belongs to the page source."""
 import argparse
+import base64
 import html
 import json
+import mimetypes
+import re
+from html.parser import HTMLParser
 from pathlib import Path
-from urllib.parse import quote
+from urllib.parse import quote, unquote, urlsplit
+from urllib.request import url2pathname
 from components import blocks_html
 from visual_plan import validate_page
 
 CANVASES = {'16:9': (1280,720), '9:16': (720,1280), 'A4': (794,1123), 'scroll': (1100,0)}
+
+
+class ReportImageError(ValueError):
+    def __init__(self, page, src, reason):
+        self.issue = {'page': page, 'object': 'img', 'src': src, 'reason': reason}
+        super().__init__(f'第{page}页图片 {src}：{reason}')
+
+
+def embed_json_images(body, source, page):
+    """Embed only img src assets; retain the author's HTML and data URIs."""
+    replacements = []
+    offsets = [0]
+    for line in body.splitlines(keepends=True):
+        offsets.append(offsets[-1] + len(line))
+
+    class Images(HTMLParser):
+        def handle_starttag(self, tag, attrs):
+            if tag != 'img':
+                return
+            src = dict(attrs).get('src', '')
+            if src.lower().startswith('data:'):
+                return
+            if not src:
+                raise ReportImageError(page, src, '缺少 src')
+            parsed = urlsplit(src)
+            if Path(src).is_absolute():
+                asset = Path(src)
+            elif parsed.scheme == 'file':
+                asset = Path(url2pathname(parsed.path))
+            elif parsed.scheme or parsed.netloc:
+                raise ReportImageError(page, src, '离线报告请先下载图片，并使用本地路径')
+            else:
+                asset = Path(source).resolve().parent / unquote(parsed.path)
+            if not asset.is_file():
+                raise ReportImageError(page, src, f'本地图片不存在：{asset.resolve()}')
+            mime = mimetypes.guess_type(asset.name)[0] or 'application/octet-stream'
+            uri = f'data:{mime};base64,' + base64.b64encode(asset.read_bytes()).decode('ascii')
+            original = self.get_starttag_text()
+            attributes = re.finditer(r'''(?P<name>[^\s=<>/"']+)\s*=\s*(?P<value>"[^"]*"|'[^']*'|[^\s>]+)''', original)
+            attribute = next(match for match in attributes if match['name'].lower() == 'src')
+            start_value, end_value = attribute.span('value')
+            updated = original[:start_value] + '"' + uri + '"' + original[end_value:]
+            line, column = self.getpos()
+            start = offsets[line - 1] + column
+            replacements.append((start, start + len(original), updated))
+
+        handle_startendtag = handle_starttag
+
+    parser = Images(convert_charrefs=True)
+    parser.feed(body)
+    for start, end, updated in reversed(replacements):
+        body = body[:start] + updated + body[end:]
+    return body
 
 
 def render(source, output, replace=False, no_pdf=False, preserve_layout=False):
@@ -39,6 +97,8 @@ def render(source, output, replace=False, no_pdf=False, preserve_layout=False):
         if not title or (canvas != 'scroll' and (not lead or title == lead)):
             raise ValueError(f'第{index}页需要不同的主标题及完整副标题')
         body = blocks_html(slide['blocks'],canvas) if 'blocks' in slide else slide.get('body', '')
+        if not markdown_input:
+            body = embed_json_images(body, source, index)
         if not body.strip() and canvas != 'scroll':
             raise ValueError(f'第{index}页正文为空')
         if '<style' in body.lower() or '<script' in body.lower():
@@ -47,7 +107,8 @@ def render(source, output, replace=False, no_pdf=False, preserve_layout=False):
             validate_page(slide, body, index)
         esc = html.escape
         layout = esc(slide.get('layout', ''), quote=True)
-        parts.append(f'<section id="page-{index}" class="slide {kind}" data-page="{index}" data-layout="{layout}"><header><div class="eyebrow"><span class="chapter-name">{esc(slide.get("section", ""))}</span><span>{index:02d}</span></div><h1>{esc(title)}</h1><p class="lead">{esc(lead)}</p></header><div class="content">{body}</div><footer><span>{esc(data.get("footer", ""))}</span><span>{index:02d} / {len(slides):02d}</span></footer></section>')
+        plan = esc(json.dumps(slide.get('visual_plan', []), ensure_ascii=False), quote=True)
+        parts.append(f'<section id="page-{index}" class="slide {kind}" data-page="{index}" data-layout="{layout}" data-visual-plan="{plan}"><header><div class="eyebrow"><span class="chapter-name">{esc(slide.get("section", ""))}</span><span>{index:02d}</span></div><h1>{esc(title)}</h1><p class="lead">{esc(lead)}</p></header><div class="content">{body}</div><footer><span>{esc(data.get("footer", ""))}</span><span>{index:02d} / {len(slides):02d}</span></footer></section>')
         options.append(f'<option value="{index-1}">{index:02d} · {esc(title)}</option>')
     template = (Path(__file__).resolve().parents[1] / 'assets/report.html').read_text(encoding='utf-8')
     mode_css=(Path(__file__).resolve().parents[1]/'assets/modes.css').read_text(encoding='utf-8')
@@ -90,6 +151,14 @@ if __name__ == '__main__':
     parser.add_argument('--no-pdf', action='store_true', help='Do not show a download link when no PDF will be delivered.')
     parser.add_argument('--preserve-layout', action='store_true', help='Only for faithful conversion of an existing layout; skips new-design visual planning.')
     args = parser.parse_args()
-    print(f'{render(args.source,args.output,args.replace,args.no_pdf,args.preserve_layout)} pages: {args.output}')
+    try:
+        count = render(args.source,args.output,args.replace,args.no_pdf,args.preserve_layout)
+    except Exception as error:
+        result = {'passed': False, 'source': args.source, 'output': args.output, 'error': str(error)}
+        if isinstance(error, ReportImageError):
+            result['image_issues'] = [error.issue]
+        print(json.dumps(result, ensure_ascii=False))
+        raise SystemExit(1)
+    print(f'{count} pages: {args.output}')
     if args.preserve_layout or Path(args.source).suffix.lower() in {'.md', '.markdown'}:
         print('原样转换：保留既有图文，未执行新设计的图形方案检查。')

@@ -1,12 +1,14 @@
 """Semantic report components. Text stays complete; pagination stays with the author."""
 import html,json,math,re
 from business_components import business_block,chart_svg
+from analytical_charts import TYPES as ANALYTICAL_TYPES, chart_html as analytical_chart_html, small_multiples_html
 
 def e(x): return html.escape(str(x),quote=True)
 def paragraphs(items):
     return ''.join(f'<p data-source="{e(x.get("source",""))}">{e(x["text"])}</p>' if isinstance(x,dict) else f'<p>{e(x)}</p>' for x in items)
 
 def chart_html(b):
+    if b['chart_type'] in ANALYTICAL_TYPES:return analytical_chart_html(b)
     if b['chart_type'] in {'hbar','waterfall'}:return chart_svg(b)
     labels,series=b['labels'],b['series']
     if b['chart_type'] not in {'bar','line','stacked'}: raise ValueError('图表支持 bar、line、stacked')
@@ -43,6 +45,7 @@ def chart_html(b):
 
 def _block_html(b,canvas='16:9'):
     t=b['type']
+    if t=='small_multiples':return small_multiples_html(b,canvas)
     result=business_block(b,canvas)
     if result is not None:return result
     if t=='prose':return f'<div class="prose">'+(f'<h2>{e(b["title"])}</h2>' if b.get('title') else '')+paragraphs(b['paragraphs'])+'</div>'

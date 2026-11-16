@@ -1,4 +1,4 @@
 interface:
   display_name: "商业报告呈现"
-  short_description: "保留完整正文，制作多形态商业HTML报告、PDF与可编辑PPT"
-  default_prompt: "请用 $hehe-report-presentation 将已确认文稿制作成商业报告页面，保留完整内容并检查实际呈现与PDF导出。"
+  short_description: "单独规划图表与数据需求，或继续制作商业HTML报告、PDF与可编辑PPT"
+  default_prompt: "请用 $hehe-report-presentation 按本次要求规划图表与图文布局；只需方案时交付选图、数据需求和备选，需要报告时再制作，并保留完整内容、检查实际呈现与导出。"

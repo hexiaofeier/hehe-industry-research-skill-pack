@@ -59,16 +59,22 @@ def chart_svg(b):
         if b.get("max") is not None:
             if b["max"]<max(vals):raise ValueError("横向条形最大值小于实际数据")
             hi=b["max"]
-        w,h=760,max(300,len(labels)*70+40);left,right,top=190,710,22
+        left,right,top=190,710,22
+        label_lines=[[str(label)[j:j+10] for j in range(0,len(str(label)),10)] or [''] for label in labels]
+        row_min=max(70,max(len(lines) for lines in label_lines)*20+18,len(series)*24+14)
+        w,h=760,max(300,len(labels)*row_min+40)
         scale=lambda v:left+(v-lo)/(hi-lo)*(right-left)
         svg=[f'<line x1="{scale(0)}" y1="{top}" x2="{scale(0)}" y2="{h-28}" stroke="#b5cbd4"/>']
         for i,label in enumerate(labels):
-            cy=top+i*(h-top-28)/len(labels);row=(h-top-28)/len(labels);bh=min(22,(row-18)/len(series))
-            svg.append(f'<text x="{left-14}" y="{cy+row/2+5}" text-anchor="end" fill="#243e4d" font-size="16">{esc(label)}</text>')
+            row=(h-top-28)/len(labels);cy=top+(i+.5)*row;bh=min(22,(row-18-(len(series)-1)*4)/len(series))
+            lines=label_lines[i];label_top=cy-(len(lines)-1)*10
+            label_text=esc(lines[0]) if len(lines)==1 else ''.join(f'<tspan x="{left-14}" y="{label_top+k*20}">{esc(line)}</tspan>' for k,line in enumerate(lines))
+            svg.append(f'<text x="{left-14}" y="{label_top}" text-anchor="end" dominant-baseline="central" fill="#243e4d" font-size="16">{label_text}</text>')
+            group_height=len(series)*bh+(len(series)-1)*4
             for j,s in enumerate(series):
-                v=s['values'][i];y=cy+7+j*(bh+4);x=min(scale(0),scale(v));width=abs(scale(v)-scale(0));fill=colors[j%4]
+                v=s['values'][i];y=cy-group_height/2+j*(bh+4);x=min(scale(0),scale(v));width=abs(scale(v)-scale(0));fill=colors[j%4]
                 svg.append(f'<rect x="{x}" y="{y}" width="{width}" height="{bh}" fill="{fill}"/>')
-                svg.append(f'<text x="{scale(v)+(7 if v>=0 else -7)}" y="{y+bh*.76}" text-anchor="{"start" if v>=0 else "end"}" fill="#243e4d" font-size="15">{v:g}{esc(b.get("value_suffix",""))}</text>')
+                svg.append(f'<text x="{scale(v)+(7 if v>=0 else -7)}" y="{y+bh/2}" text-anchor="{"start" if v>=0 else "end"}" dominant-baseline="central" fill="#243e4d" font-size="15">{v:g}{esc(b.get("value_suffix",""))}</text>')
         legend=[(s['name'],colors[j%4]) for j,s in enumerate(series)]
         alt='；'.join(f'{label}：'+ '、'.join(f'{s["name"]}{s["values"][i]}{b.get("unit","")}' for s in series) for i,label in enumerate(labels))
     elif kind=='waterfall':

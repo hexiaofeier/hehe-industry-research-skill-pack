@@ -1,0 +1,324 @@
+{
+  "title": "研究执行与服务流程教学示例",
+  "canvas": "16:9",
+  "theme": "blue",
+  "extra_css": "#exec-analysis{grid-template-columns:repeat(3,minmax(0,1fr));gap:38px}#exec-analysis .analysis-stage h2{font-size:22px}#exec-analysis .analysis-stage p{font-size:20px;line-height:1.8}#exec-analysis .stage-track{margin-bottom:28px}#exec-swimlane th:first-child{width:132px}#exec-swimlane td,#exec-swimlane th{padding:16px 18px}#exec-gantt .gantt-head,#exec-gantt .gantt-row{grid-template-columns:1.15fr 2fr 1.25fr;gap:22px}#exec-gantt .gantt-row{padding:15px 0}#exec-gantt .gantt-periods{font-size:16px}#exec-gantt .gantt-bar{height:26px;top:calc(50% - 13px)}#exec-gantt .gantt-bar>span{line-height:26px;font-size:14px}#exec-journey th:first-child{width:118px}#exec-journey td,#exec-journey th{padding:15px 16px}#exec-journey p{font-size:18px;line-height:1.65}\n#exec-swimlane td,#exec-swimlane th,#exec-journey td,#exec-journey th{padding:10px 16px}\n#exec-gantt .gantt-head,#exec-gantt .gantt-row{grid-template-columns:1.5fr 1.7fr 1.6fr;gap:22px}\n#exec-gantt .gantt-row{padding:8px 0}#exec-branch .branch-row p{text-wrap:pretty}\n[id^=\"caption-exec-\"]{margin-top:14px}[id^=\"caption-exec-\"] p{font-size:13px;line-height:1.65;color:var(--muted)}\n",
+  "slides": [
+    {
+      "kind": "content",
+      "section": "执行关系示例｜分支汇合",
+      "title": "衡远设备维护服务公司的门店试点决策依据",
+      "lead": "客户需求、服务能力与经营测算共同汇入两家门店的试点方案，管理层据此确认执行条件。",
+      "layout": "branch_merge",
+      "purpose": "让管理层看清三个研究分支如何共同支持试点方案确认。",
+      "blocks": [
+        {
+          "type": "branch_merge",
+          "id": "exec-branch",
+          "merge_label": "共同支持试点决策",
+          "branches": [
+            {
+              "title": "客户需求确定服务范围",
+              "paragraphs": [
+                "项目组拟核对两家门店的停机记录与营业时段，形成优先维护设备和服务窗口清单。"
+              ]
+            },
+            {
+              "title": "服务能力约束响应承诺",
+              "paragraphs": [
+                "项目组拟盘点工程师排班、行程和常用备件，明确试点期间能够兑现的到场承诺。"
+              ]
+            },
+            {
+              "title": "经营测算明确投入边界",
+              "paragraphs": [
+                "项目组拟计入人工、交通和备件支出，比较服务报价与成本，提出试点预算上限。"
+              ]
+            }
+          ],
+          "result": {
+            "title": "管理层确认两店试点方案",
+            "paragraphs": [
+              "管理层拟综合三类材料，确认维护设备、响应时段和投入上限，再批准试点启动。"
+            ]
+          }
+        },
+        {
+          "type": "prose",
+          "paragraphs": [
+            "来源：虚构的衡远设备维护服务公司；本页为模拟计划。"
+          ],
+          "id": "caption-exec-branch"
+        }
+      ],
+      "visual_plan": {
+        "relation": "convergence",
+        "message": "客户需求、服务能力与经营测算三个分支共同汇入衡远公司的门店试点决策。",
+        "form": "branch_merge",
+        "target": "exec-branch",
+        "explanation": "三个分支内分别说明拟收集的材料，右侧汇合节点交代管理层拟确认的执行条件。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "执行关系示例｜分析推导",
+      "title": "衡远设备维护服务公司的排班方案形成路径",
+      "lead": "项目组拟先整理门店报修记录，再测算服务负荷，最后形成与营业时段匹配的工程师排班建议。",
+      "layout": "analysis_path",
+      "purpose": "让业务负责人沿输入、处理和结果查看排班建议的形成过程。",
+      "blocks": [
+        {
+          "type": "analysis_path",
+          "id": "exec-analysis",
+          "steps": [
+            {
+              "title": "整理报修记录形成分析输入",
+              "paragraphs": [
+                "项目组拟按门店、设备和时段整理报修记录，补齐故障类型、处理时长及停机影响。"
+              ]
+            },
+            {
+              "title": "测算服务负荷识别排班缺口",
+              "paragraphs": [
+                "项目组拟把维修时长与往返行程计入班次，比较各营业时段的需求与可用工程师。"
+              ]
+            },
+            {
+              "title": "形成排班建议提交业务确认",
+              "paragraphs": [
+                "项目组拟据此提出值班人数、服务半径和备援安排，由业务负责人确认后进入试点。"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "paragraphs": [
+            "来源：虚构的衡远设备维护服务公司；本页为模拟计划。"
+          ],
+          "id": "caption-exec-analysis"
+        }
+      ],
+      "visual_plan": {
+        "relation": "sequence",
+        "message": "门店报修记录先进入服务负荷测算，再形成衡远公司的工程师排班建议。",
+        "form": "flow",
+        "target": "exec-analysis",
+        "explanation": "三个有序阶段分别保留报修输入、负荷处理方法与排班产出的完整说明。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "执行关系示例｜角色泳道",
+      "title": "衡远门店维护试点的三方协作安排",
+      "lead": "客户门店、服务调度与现场工程师按准备、执行和验收三个阶段分工，并在交接处核对关键材料。",
+      "layout": "swimlane",
+      "purpose": "按角色与阶段交叉查看拟承担的动作、使用材料和交付结果。",
+      "blocks": [
+        {
+          "type": "swimlane",
+          "id": "exec-swimlane",
+          "axis": "负责角色",
+          "stages": [
+            "试点准备",
+            "服务执行",
+            "验收复盘"
+          ],
+          "rows": [
+            {
+              "label": "客户门店",
+              "cells": [
+                "门店负责人拟提交设备清单和营业时段，并确认能够安排检修的停机窗口。",
+                "门店负责人拟按报修模板上传现象与照片，协助工程师核对故障设备及现场条件。",
+                "门店负责人拟核对设备恢复情况并签收工单，集中反馈仍影响营业的遗留问题。"
+              ]
+            },
+            {
+              "label": "服务调度",
+              "cells": [
+                "调度负责人拟依据门店分布与排班表分配服务区域，明确工程师和备援联系人。",
+                "调度人员拟核对报修信息后派单，向门店告知预计到场时间并跟踪超时工单。",
+                "调度人员拟汇总响应与维修记录，对照约定时段识别延误环节并提出调整事项。"
+              ]
+            },
+            {
+              "label": "现场工程师",
+              "cells": [
+                "工程师拟核对设备型号和历史故障，按试点清单准备工具、常用备件及安全用品。",
+                "工程师拟按派单顺序到场诊断，记录更换备件与处理时长，向门店说明恢复条件。",
+                "工程师拟提交维修记录与未解决事项，参与复盘并修订下轮服务所需的备件清单。"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "paragraphs": [
+            "来源：虚构的衡远设备维护服务公司；本页为模拟计划。"
+          ],
+          "id": "caption-exec-swimlane"
+        }
+      ],
+      "visual_plan": {
+        "relation": "coordination",
+        "message": "客户门店、服务调度与现场工程师在试点准备、服务执行及验收复盘三个阶段分别承担交接工作。",
+        "form": "swimlane",
+        "target": "exec-swimlane",
+        "explanation": "九个角色与阶段交叉单元分别说明责任主体、拟执行动作及其使用或提交的材料。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "执行关系示例｜甘特排期",
+      "title": "衡远门店维护试点的六周执行计划",
+      "lead": "前两周完成准备，第3—4周开展门店试点，第5周提交评估初稿，第6周完成复盘并确认下一阶段安排。",
+      "layout": "gantt",
+      "purpose": "展示四项工作的计划持续区间、重叠安排和阶段交付。",
+      "blocks": [
+        {
+          "type": "gantt",
+          "id": "exec-gantt",
+          "work_label": "计划工作",
+          "result_label": "阶段交付与确认",
+          "periods": [
+            "第1周",
+            "第2周",
+            "第3周",
+            "第4周",
+            "第5周",
+            "第6周"
+          ],
+          "items": [
+            {
+              "title": "核对范围并准备资源",
+              "paragraphs": [
+                "项目组拟核对两店设备与历史工单，准备工程师排班、备件和服务记录模板。"
+              ],
+              "start": 1,
+              "end": 2,
+              "bar_label": "准备",
+              "deliverables": [
+                "第二周周五拟确认设备清单、服务时段与排班表，作为门店试点启动依据。"
+              ]
+            },
+            {
+              "title": "开展门店服务试点",
+              "paragraphs": [
+                "服务团队拟按约定时段接单和到场，逐单记录故障、处理时长及备件消耗。"
+              ],
+              "start": 3,
+              "end": 4,
+              "bar_label": "试点服务",
+              "deliverables": [
+                "服务团队拟在每周五提交工单汇总，标明未解决故障及下一周需要协调的事项。"
+              ]
+            },
+            {
+              "title": "分析工单与服务成本",
+              "paragraphs": [
+                "项目组拟逐周核对工单与支出，比较响应承诺的兑现情况和各类故障的服务负荷。"
+              ],
+              "start": 3,
+              "end": 5,
+              "bar_label": "分析评估",
+              "deliverables": [
+                "第五周周五拟提交试点评估初稿，列出排班、备件与报价需要调整的具体事项。"
+              ]
+            },
+            {
+              "title": "复盘并确认后续安排",
+              "paragraphs": [
+                "管理层拟组织门店与服务团队复盘，核对遗留问题并确认下一阶段的投入安排。"
+              ],
+              "start": 6,
+              "end": 6,
+              "bar_label": "确认",
+              "deliverables": [
+                "第六周周五拟确认评估终稿与后续行动表，逐项明确责任人和计划完成时间。"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "paragraphs": [
+            "来源：虚构的衡远设备维护服务公司；时间条表示模拟计划的工作持续区间。"
+          ],
+          "id": "caption-exec-gantt"
+        }
+      ],
+      "visual_plan": {
+        "relation": "sequence",
+        "message": "衡远公司四项试点工作在六周内按已设定的起止周衔接，时间条与同一行的阶段交付对应。",
+        "form": "gantt",
+        "target": "exec-gantt",
+        "explanation": "左列交代拟执行的工作，中间时间条表达持续和重叠，右列保留阶段成果及确认时间。"
+      }
+    },
+    {
+      "kind": "content",
+      "section": "执行关系示例｜服务旅程",
+      "title": "衡远设备维护服务的门店报修旅程设计",
+      "lead": "门店从发起报修到验收回访经历四个阶段，每项服务改进都对应同阶段的任务与模拟困难。",
+      "layout": "journey",
+      "purpose": "将门店任务、模拟困难与拟议服务改进按四个阶段对应呈现。",
+      "blocks": [
+        {
+          "type": "journey",
+          "id": "exec-journey",
+          "axis": "旅程维度",
+          "stages": [
+            "发起报修",
+            "确认到场",
+            "现场修复",
+            "验收回访"
+          ],
+          "rows": [
+            {
+              "label": "门店任务",
+              "cells": [
+                "门店拟描述故障现象并上传设备照片，向调度人员说明停机对当前营业的影响。",
+                "门店拟核对预计到场时间，安排员工接待工程师，并协调设备检修所需的停机窗口。",
+                "门店拟协助工程师定位故障设备，核对维修建议，并在需要更换备件时确认费用。",
+                "门店拟检查设备运行情况并签收工单，在约定回访时反馈故障是否再次发生。"
+              ]
+            },
+            {
+              "label": "模拟困难",
+              "cells": [
+                "如果门店无法识别设备型号，调度人员可能反复追问，导致报修信息迟迟不能补齐。",
+                "如果工程师行程发生变化，门店可能无法及时调整停机安排，影响现场检修衔接。",
+                "如果备件与维修费用尚未确认，工程师可能需要暂停操作，等待门店负责人决定。",
+                "如果签收时只确认能够开机，门店可能无法发现间歇故障，后续仍需再次报修。"
+              ]
+            },
+            {
+              "label": "拟议改进",
+              "cells": [
+                "服务团队拟提供设备标识和拍照示例，引导门店一次补齐派单需要的基本信息。",
+                "调度人员拟在行程变化时主动通知门店，重新确认到场时间与可用的检修窗口。",
+                "服务团队拟在维修前列明处理方案、备件与费用，由门店授权人员确认后执行。",
+                "服务团队拟提供包含运行测试的验收清单，并在回访时核对间歇故障是否复现。"
+              ]
+            }
+          ]
+        },
+        {
+          "type": "prose",
+          "paragraphs": [
+            "来源：虚构的衡远设备维护服务公司；任务、困难和改进均为模拟服务设计。"
+          ],
+          "id": "caption-exec-journey"
+        }
+      ],
+      "visual_plan": {
+        "relation": "coordination",
+        "message": "衡远公司报修服务的四个阶段分别对应门店任务、模拟困难和拟议服务改进。",
+        "form": "journey",
+        "target": "exec-journey",
+        "explanation": "旅程矩阵按列对应四个服务阶段，三行分别保留任务、困难发生条件与拟议改进的完整说明。"
+      }
+    }
+  ],
+  "footer": "执行安排教学示例｜模拟计划"
+}
